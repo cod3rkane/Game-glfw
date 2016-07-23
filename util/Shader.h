@@ -10,6 +10,7 @@
 using namespace std;
 
 class Shader {
+public:
     GLuint program;
 
     Shader(const GLchar* vertexPath, const GLchar* fragmentPath);
