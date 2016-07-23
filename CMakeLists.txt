@@ -11,8 +11,8 @@ pkg_search_module(GLFW REQUIRED glfw3)
 
 include_directories(${GLFW_INCLUDE_DIRS})
 
-set(SOURCE_FILES main.cpp components/Button.cpp components/Button.h)
-add_executable(Game ${SOURCE_FILES} components/Button.cpp components/Button.h)
+set(SOURCE_FILES main.cpp components/Button.cpp components/Button.h util/Shader.cpp util/Shader.h)
+add_executable(Game ${SOURCE_FILES} components/Button.cpp components/Button.h util/Shader.cpp util/Shader.h)
 
 include_directories(${OPENGL_INCLUDE_DIRS} ${GLEW_INCLUDE_DIRS})
 target_link_libraries(Game ${GLFW_LIBRARIES} ${OPENGL_LIBRARIES} ${GLEW_LIBRARIES})
