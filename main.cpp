@@ -3,8 +3,12 @@
 #include <GLFW/glfw3.h>
 #include <tgmath.h>
 #include "util/Shader.h"
+#include "components/Rectangle.h"
 
 using namespace std;
+
+const int WINDOW_W = 1280;
+const int WINDOW_H = 720;
 
 static void error_callback(int error, const char* desc) {
     cout << "Error: " << desc << endl;
@@ -22,7 +26,7 @@ int main() {
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
 
-    GLFWwindow* window = glfwCreateWindow(1920, 1080, "Winters Survivor - Project - BuildDev", NULL, NULL);
+    GLFWwindow* window = glfwCreateWindow(WINDOW_W, WINDOW_H, "Winters Survivor - Project - BuildDev", NULL, NULL);
     if (!window) {
         cout << "could not create Window" << endl;
         glfwTerminate();
@@ -41,35 +45,21 @@ int main() {
 
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LESS);
-    glViewport(0, 0, 1920, 1080);
+    glViewport(0, 0, WINDOW_W, WINDOW_H);
 
     Shader triangleShader("assets/Shaders/VertexShader.glsl", "assets/Shaders/FragmentShader.glsl");
 
-    GLfloat vertices[] = {
-        // Positions         // Colors
-        0.5f, -0.5f, 0.0f,   1.0f, 0.0f, 0.0f,  // Bottom Right
-        -0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,  // Bottom Left
-        0.0f,  0.5f, 0.0f,   0.0f, 0.0f, 1.0f   // Top
-    };
+    GLfloat redColor[] = {0.91f, 0.17f, 0.05f};
+    GLfloat purpleColor[] = {0.91f, 0.05f, 0.48f};
 
-    GLuint VBO, VAO;
-    glGenVertexArrays(1, &VAO);
-    glGenBuffers(1, &VBO);
+    Rectangle rect = Rectangle(redColor);
+    Rectangle rect2 = Rectangle(purpleColor);
 
-    // Bind the Vertex Array Object first, then bind and set vertex buffer(s) and attribute pointer(s).
-    glBindVertexArray(VAO);
+    rect.shader(&triangleShader);
+    rect2.shader(&triangleShader);
 
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-    // Position attribute
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (GLvoid*)0);
-    glEnableVertexAttribArray(0);
-    // Color attribute
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat)));
-    glEnableVertexAttribArray(1);
-
-    glBindVertexArray(0); // unbind VAO
+    rect2.y(0.5f);
+    rect.x(0.6f);
 
     while (!glfwWindowShouldClose(window)) {
         // Check and call events
@@ -79,14 +69,9 @@ int main() {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 
-        // Draw Triangle
-        triangleShader.use();
-        // xOffset uniform
-        GLfloat offset = -0.5f;
-        glUniform1f(glGetUniformLocation(triangleShader.program, "xOffset"), offset);
-        glBindVertexArray(VAO);
-        glDrawArrays(GL_TRIANGLES, 0, 3);
-        glBindVertexArray(0);
+        // Render Objects
+        rect.render();
+        rect2.render();
 
         glfwSwapBuffers(window);
     }

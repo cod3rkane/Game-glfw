@@ -5,22 +5,30 @@
       <sourceFolder url="file://$MODULE_DIR$/util/Shader.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/util/Shader.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/main.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/components/Button.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/components/Rectangle.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/components/Rectangle.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/components/Button.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/components/Button.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/MinGW/lib/cmake/glfw3/glfw3Targets-noconfig.cmake" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/MinGW/lib/cmake/glfw3/glfw3Targets.cmake" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/MinGW/lib/cmake/glfw3/glfw3ConfigVersion.cmake" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/MinGW/lib/cmake/glfw3/glfw3Config.cmake" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/CMakeLists.txt" isTestSource="false" />
     </content>
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module-library">
       <library name="Header Search Paths">
         <CLASSES>
-          <root url="file:///usr/include" />
-          <root url="file:///usr/lib/gcc/x86_64-redhat-linux/6.1.1/include" />
-          <root url="file:///usr/local/include" />
+          <root url="file://C:/MinGW/lib/gcc/mingw32/4.9.3/include" />
+          <root url="file://C:/MinGW/lib/gcc/mingw32/4.9.3/include-fixed" />
+          <root url="file://C:/MinGW/mingw32/include" />
+          <root url="file://C:/MinGW/include" />
         </CLASSES>
         <SOURCES>
-          <root url="file:///usr/include" />
-          <root url="file:///usr/lib/gcc/x86_64-redhat-linux/6.1.1/include" />
-          <root url="file:///usr/local/include" />
+          <root url="file://C:/MinGW/lib/gcc/mingw32/4.9.3/include" />
+          <root url="file://C:/MinGW/lib/gcc/mingw32/4.9.3/include-fixed" />
+          <root url="file://C:/MinGW/mingw32/include" />
+          <root url="file://C:/MinGW/include" />
         </SOURCES>
       </library>
     </orderEntry>
