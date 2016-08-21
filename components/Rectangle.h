@@ -13,10 +13,12 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <GLFW/glfw3.h>
+#include <SOIL/SOIL.h>
 
 class Rectangle {
     GLuint VBO, VAO, EBO;
     Shader* myShader;
+    GLuint texture;
     GLfloat xPos = 0.0f;
     GLfloat yPos = 0.0f;
     GLfloat zPos = 0.0f;

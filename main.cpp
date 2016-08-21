@@ -63,6 +63,8 @@ int main() {
 //    Enemy.x(0.f);
     Enemy.y(0.78f);
 
+    double xpos, ypos;
+
     while (!glfwWindowShouldClose(window)) {
         // Check and call events
         glfwPollEvents();
@@ -74,6 +76,11 @@ int main() {
         // Render Objects
         player.render();
         Enemy.render();
+
+        // mouse pos
+//        glfwGetCursorPos(window, &xpos, &ypos);
+//        cout << "Xpos:" << xpos << endl;
+//        cout << "Ypos:" << ypos << endl;
 
         glfwSwapBuffers(window);
     }
