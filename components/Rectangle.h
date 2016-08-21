@@ -6,14 +6,20 @@
 #define GAME_RECTANGLE_H
 
 
+#include <GL/glew.h>
 #include <GL/gl.h>
 #include "../util/Shader.h"
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+#include <GLFW/glfw3.h>
 
 class Rectangle {
     GLuint VBO, VAO;
     Shader* myShader;
     GLfloat xPos = 0.0f;
     GLfloat yPos = 0.0f;
+    GLfloat zPos = 0.0f;
 public:
     Rectangle(GLfloat color[]);
     void render();
@@ -23,6 +29,8 @@ public:
     void x(GLfloat x);
     GLfloat y();
     void y(GLfloat y);
+    GLfloat z();
+    void z(GLfloat z);
 };
 
 #endif //GAME_RECTANGLE_H

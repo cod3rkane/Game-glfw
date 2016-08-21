@@ -13,6 +13,8 @@
       <sourceFolder url="file://$MODULE_DIR$/MinGW/lib/cmake/glfw3/glfw3Targets.cmake" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/MinGW/lib/cmake/glfw3/glfw3ConfigVersion.cmake" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/MinGW/lib/cmake/glfw3/glfw3Config.cmake" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/MinGW/lib/cmake/glm/glmTargets.cmake" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/MinGW/lib/cmake/glm/glmConfig.cmake" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/CMakeLists.txt" isTestSource="false" />
     </content>
     <orderEntry type="sourceFolder" forTests="false" />

@@ -26,7 +26,7 @@ int main() {
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
 
-    GLFWwindow* window = glfwCreateWindow(WINDOW_W, WINDOW_H, "Winters Survivor - Project - BuildDev", NULL, NULL);
+    GLFWwindow* window = glfwCreateWindow(WINDOW_W, WINDOW_H, "Project Melkor - Roch Studio", NULL, NULL);
     if (!window) {
         cout << "could not create Window" << endl;
         glfwTerminate();
@@ -49,17 +49,19 @@ int main() {
 
     Shader triangleShader("assets/Shaders/VertexShader.glsl", "assets/Shaders/FragmentShader.glsl");
 
-    GLfloat redColor[] = {0.91f, 0.17f, 0.05f};
-    GLfloat purpleColor[] = {0.91f, 0.05f, 0.48f};
+    GLfloat blueColor[] = {0.38f, 0.44f, 1.0f};
+    GLfloat redColor[] = {0.72f, 0.0f, 0.02f};
 
-    Rectangle rect = Rectangle(redColor);
-    Rectangle rect2 = Rectangle(purpleColor);
+    Rectangle player = Rectangle(blueColor);
+    Rectangle Enemy = Rectangle(redColor);
 
-    rect.shader(&triangleShader);
-    rect2.shader(&triangleShader);
+    player.shader(&triangleShader);
+//    player.x(0.6f);
+    player.y(-0.78f);
 
-    rect2.y(0.5f);
-    rect.x(0.6f);
+    Enemy.shader(&triangleShader);
+//    Enemy.x(0.f);
+    Enemy.y(0.78f);
 
     while (!glfwWindowShouldClose(window)) {
         // Check and call events
@@ -70,8 +72,8 @@ int main() {
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 
         // Render Objects
-        rect.render();
-        rect2.render();
+        player.render();
+        Enemy.render();
 
         glfwSwapBuffers(window);
     }

@@ -2,7 +2,6 @@
 // Created by cod3r on 20/08/2016.
 //
 
-#include <GL/glew.h>
 #include "Rectangle.h"
 
 Rectangle::Rectangle(GLfloat color[]) {
@@ -41,6 +40,13 @@ void Rectangle::render() {
     glUniform1f(glGetUniformLocation(this->myShader->program, "xOffset"), this->xPos);
     glUniform1f(glGetUniformLocation(this->myShader->program, "YOffset"), this->yPos);
 
+    glm::mat4 transform;
+    transform = glm::translate(transform, glm::vec3(this->xPos, this->yPos, this->zPos));
+
+    // Get matrix's uniform location and set matrix
+    GLint transformLoc = glGetUniformLocation(this->myShader->program, "transform");
+    glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transform));
+
     glBindVertexArray(this->VAO);
     glDrawArrays(GL_TRIANGLES, 0, 6);
     glBindVertexArray(0);
@@ -68,4 +74,12 @@ GLfloat Rectangle::y() {
 
 void Rectangle::y(GLfloat y) {
     this->yPos = y;
+}
+
+GLfloat Rectangle::z() {
+    return this->zPos;
+}
+
+void Rectangle::z(GLfloat z) {
+    this->zPos = z;
 }
