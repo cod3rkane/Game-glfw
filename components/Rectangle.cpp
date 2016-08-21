@@ -77,8 +77,8 @@ void Rectangle::textureImage(unsigned char *image, int width, int height) {
         glGenTextures(1, &this->myTexture);
         glBindTexture(GL_TEXTURE_2D, this->myTexture);
         // Set out myTexture parameters
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
         // Set myTexture filtering
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -87,6 +87,7 @@ void Rectangle::textureImage(unsigned char *image, int width, int height) {
         glGenerateMipmap(GL_TEXTURE_2D);
         // Free memory image
         SOIL_free_image_data(image);
+        glBindVertexArray(0);
         glBindTexture(GL_TEXTURE_2D, 0);
     } catch (unsigned char *image) {
         cout << "couldn't load image because: " << image << endl;

@@ -4,6 +4,9 @@
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/util/Shader.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/util/Shader.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/util/FontConfigs.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/util/FontConfigs.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/util/Character.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/main.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/components/Rectangle.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/components/Rectangle.h" isTestSource="false" />
