@@ -15,7 +15,7 @@
 #include <GLFW/glfw3.h>
 
 class Rectangle {
-    GLuint VBO, VAO;
+    GLuint VBO, VAO, EBO;
     Shader* myShader;
     GLfloat xPos = 0.0f;
     GLfloat yPos = 0.0f;
