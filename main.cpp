@@ -48,20 +48,22 @@ int main() {
     glViewport(0, 0, WINDOW_W, WINDOW_H);
 
     Shader triangleShader("assets/Shaders/VertexShader.glsl", "assets/Shaders/FragmentShader.glsl");
+    Shader EnemyShader("assets/Shaders/VertexShader.glsl", "assets/Shaders/FragmentShader.glsl");
 
     GLfloat blueColor[] = {0.38f, 0.44f, 1.0f};
     GLfloat redColor[] = {0.72f, 0.0f, 0.02f};
 
-    Rectangle player = Rectangle(blueColor);
     Rectangle Enemy = Rectangle(redColor);
-
-    player.shader(&triangleShader);
-//    player.x(0.6f);
-    player.y(-0.78f);
-
-    Enemy.shader(&triangleShader);
-//    Enemy.x(0.f);
+    Enemy.shader(&EnemyShader);
     Enemy.y(0.78f);
+
+    Rectangle player = Rectangle(blueColor);
+    player.shader(&triangleShader);
+    player.y(-0.78f);
+    // Player Texture
+    int imageW, imageH;
+    unsigned char *image = SOIL_load_image("assets/images/container.jpg", &imageW, &imageH, 0, SOIL_LOAD_RGB);
+    player.textureImage(image, imageW, imageH);
 
     double xpos, ypos;
 
@@ -74,8 +76,8 @@ int main() {
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 
         // Render Objects
-        player.render();
         Enemy.render();
+        player.render();
 
         // mouse pos
 //        glfwGetCursorPos(window, &xpos, &ypos);

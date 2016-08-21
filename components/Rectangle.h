@@ -18,12 +18,13 @@
 class Rectangle {
     GLuint VBO, VAO, EBO;
     Shader* myShader;
-    GLuint texture;
+    GLuint myTexture = 0;
     GLfloat xPos = 0.0f;
     GLfloat yPos = 0.0f;
     GLfloat zPos = 0.0f;
 public:
     Rectangle(GLfloat color[]);
+    ~Rectangle();
     void render();
     Shader shader();
     void shader(Shader* shader);
@@ -33,6 +34,8 @@ public:
     void y(GLfloat y);
     GLfloat z();
     void z(GLfloat z);
+    void textureImage(unsigned char* image, int width, int height);
+    GLuint texture();
 };
 
 #endif //GAME_RECTANGLE_H

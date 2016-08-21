@@ -42,32 +42,14 @@ Rectangle::Rectangle(GLfloat color[]) {
     glEnableVertexAttribArray(2);
 
     glBindVertexArray(0); // unbind VAO
-
-    // Load and create texture
-    glGenTextures(1, &this->texture);
-    glBindTexture(GL_TEXTURE_2D, this->texture);
-    // Set out texture parameters
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    // Set texture filtering
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-    int width, height;
-    unsigned char* image = SOIL_load_image("assets/images/container.jpg", &width, &height, 0, SOIL_LOAD_RGB);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
-    glGenerateMipmap(GL_TEXTURE_2D);
-    // Free memory image
-    SOIL_free_image_data(image);
-    glBindTexture(GL_TEXTURE_2D, 0); // Unbind texture when done.
 }
 
 void Rectangle::render() {
     this->myShader->use();
 
-    // Bind texture using texture units
+    // Bind myTexture using myTexture units
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, this->texture);
+    glBindTexture(GL_TEXTURE_2D, this->myTexture);
     glUniform1i(glGetUniformLocation(this->myShader->program, "ourTexture1"), 0);
 
     glUniform1f(glGetUniformLocation(this->myShader->program, "xOffset"), this->xPos);
@@ -83,6 +65,36 @@ void Rectangle::render() {
     glBindVertexArray(this->VAO);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
+}
+
+GLuint Rectangle::texture() {
+    return this->myTexture;
+}
+
+void Rectangle::textureImage(unsigned char *image, int width, int height) {
+    try {
+        // Load and create myTexture
+        glGenTextures(1, &this->myTexture);
+        glBindTexture(GL_TEXTURE_2D, this->myTexture);
+        // Set out myTexture parameters
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+        // Set myTexture filtering
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
+        glGenerateMipmap(GL_TEXTURE_2D);
+        // Free memory image
+        SOIL_free_image_data(image);
+        glBindTexture(GL_TEXTURE_2D, 0);
+    } catch (unsigned char *image) {
+        cout << "couldn't load image because: " << image << endl;
+        throw "Error";
+    } catch (int num) {
+        cout << "couldn't load image because: " << num << endl;
+        throw "Error";
+    }
 }
 
 Shader Rectangle::shader() {
@@ -115,4 +127,10 @@ GLfloat Rectangle::z() {
 
 void Rectangle::z(GLfloat z) {
     this->zPos = z;
+}
+
+Rectangle::~Rectangle() {
+    glDeleteVertexArrays(1, &this->VAO);
+    glDeleteBuffers(1, &this->VBO);
+    glDeleteBuffers(1, &this->EBO);
 }
