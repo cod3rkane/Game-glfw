@@ -8,10 +8,12 @@
       <sourceFolder url="file://$MODULE_DIR$/util/FontConfigs.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/util/Character.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/main.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/components/Rectangle.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/components/Rectangle.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/components/TextDraw.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/components/TextDraw.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/components/Button.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/components/Button.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/components/Rectangle.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/MinGW/lib/cmake/glfw3/glfw3Targets-noconfig.cmake" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/MinGW/lib/cmake/glfw3/glfw3Targets.cmake" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/MinGW/lib/cmake/glfw3/glfw3ConfigVersion.cmake" isTestSource="false" />
