@@ -6,6 +6,7 @@
 #include <map>
 #include "util/FontConfigs.h"
 #include "components/TextDraw.h"
+#include "components/InputText.h"
 
 using namespace std;
 
@@ -23,7 +24,7 @@ static void keyCallBack(GLFWwindow *window, int key, int scancode, int action, i
 
 int main() {
     glfwInit();
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
@@ -48,9 +49,11 @@ int main() {
         return -1;
     }
 
-    glViewport(0, 0, WINDOW_W, WINDOW_H);
+    InputText inputText(window);
 
-    glEnable(GL_DEPTH_TEST);
+//    glViewport(0, 0, WINDOW_W, WINDOW_H);
+
+//    glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LESS);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -59,7 +62,6 @@ int main() {
 
     // ### Font Configs
     Shader fontShader("assets/Shaders/FontVertexShader.glsl", "assets/Shaders/FontFragmentShader.glsl");
-    fontShader.use();
     FontConfigs fontConfigs(18);
     // ### End Font Configs
 
@@ -82,15 +84,13 @@ int main() {
     unsigned char *image = SOIL_load_image("assets/images/container.jpg", &imageW, &imageH, 0, SOIL_LOAD_RGB);
     player.textureImage(image, imageW, imageH);
 
-    double xpos, ypos;
-
     while (!glfwWindowShouldClose(window)) {
         // Check and call events
         glfwPollEvents();
 
         // Game Logic here
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+//        glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 
         // Render Objects
         Enemy.render();
@@ -100,13 +100,10 @@ int main() {
         playerText.x(5.0f);
         playerText.y(5.0f);
         playerText.scale(1.0f);
-        playerText.text("My First Test Using TextDraw Class");
+        playerText.text("Created By Cod3r Kane");
         playerText.render();
 
-        // mouse pos
-//        glfwGetCursorPos(window, &xpos, &ypos);
-//        cout << "Xpos:" << xpos << endl;
-//        cout << "Ypos:" << ypos << endl;
+        inputText.render();
 
         glfwSwapBuffers(window);
     }
