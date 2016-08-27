@@ -56,8 +56,8 @@ void Rectangle::render() {
     glBindTexture(GL_TEXTURE_2D, this->myTexture);
     glUniform1i(glGetUniformLocation(this->myShader->program, "ourTexture1"), 0);
 
-    glUniform1f(glGetUniformLocation(this->myShader->program, "xOffset"), this->xPos);
-    glUniform1f(glGetUniformLocation(this->myShader->program, "YOffset"), this->yPos);
+//    glUniform1f(glGetUniformLocation(this->myShader->program, "xOffset"), this->xPos);
+//    glUniform1f(glGetUniformLocation(this->myShader->program, "YOffset"), this->yPos);
 
     glm::mat4 transform;
     transform = glm::translate(transform, glm::vec3(this->xPos, this->yPos, this->zPos));

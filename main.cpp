@@ -49,11 +49,11 @@ int main() {
         return -1;
     }
 
-    InputText inputText(window);
+    InputText inputText(window, WINDOW_W, WINDOW_H);
 
-//    glViewport(0, 0, WINDOW_W, WINDOW_H);
+    glViewport(0, 0, WINDOW_W, WINDOW_H);
 
-//    glEnable(GL_DEPTH_TEST);
+    glEnable(GL_DEPTH);
     glDepthFunc(GL_LESS);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -103,6 +103,7 @@ int main() {
         playerText.text("Created By Cod3r Kane");
         playerText.render();
 
+//        inputText.x(0.78f);
         inputText.render();
 
         glfwSwapBuffers(window);

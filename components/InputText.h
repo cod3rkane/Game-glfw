@@ -18,18 +18,17 @@ class InputText {
     static void cursorPositionCallBack(GLFWwindow*, double xpos, double ypos);
     static double mouseXpos, mouseYPos;
     GLuint VBO[2], VAO, EBO;
-    Shader shader = Shader("assets/Shaders/ColorAndPosition.vert", "assets/Shaders/ColorAndPosition.frag");
-    GLuint myTexture = 0;
+    Shader shader = Shader("assets/Shaders/Color-Position-Projection.vert", "assets/Shaders/Color-Position-Projection.frag");
     GLfloat xPos = 0.0f;
     GLfloat yPos = 0.0f;
-    GLfloat zPos = 0.0f;
+    GLfloat Scale = 1.0f;
+    int windowW, windowH;
 public:
-    InputText(GLFWwindow* window);
+    InputText(GLFWwindow* window, int windowWidth, int windowHeight);
     ~InputText();
     void render();
     void x(GLfloat xpos);
     void y(GLfloat ypos);
-    void z(GLfloat zpos);
 };
 
 
