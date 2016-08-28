@@ -13,29 +13,33 @@ using namespace std;
 const int WINDOW_W = 1280;
 const int WINDOW_H = 720;
 
+// @todo remove these variables when GameLoop and GameWindow done.
+int keyboardkey, mouseButton, mouseAction;
+unsigned int charCodePoint;
+
 static void error_callback(int error, const char *desc) {
     cout << "Error: " << desc << endl;
 }
 
 static void keyCallBack(GLFWwindow *window, int key, int scancode, int action, int mods) {
     if (action == GLFW_PRESS || action == GLFW_REPEAT) {
-        InputText::keyboardKey = key;
+        keyboardkey = key;
         if (key == GLFW_KEY_ESCAPE) {
             glfwSetWindowShouldClose(window, GLFW_TRUE);
         }
     } else if (action == GLFW_RELEASE) {
-        InputText::keyboardKey = 0;
+        keyboardkey = 0;
     }
 
 }
 
 static void mouseButtonCallback(GLFWwindow* window, int button, int action, int mods) {
-    InputText::MouseButton = button;
-    InputText::MouseAction = action;
+    mouseButton = button;
+    mouseAction = action;
 }
 
 void character_callback(GLFWwindow* window, unsigned int codepoint, int mods) {
-    InputText::codepoint = codepoint;
+    charCodePoint = codepoint;
 //    cout << static_cast<unsigned char>(static_cast<unsigned int>(codepoint)) << endl;
 }
 
@@ -81,7 +85,6 @@ int main() {
 
     // ### Font Configs
     Shader fontShader("assets/Shaders/FontVertexShader.glsl", "assets/Shaders/FontFragmentShader.glsl");
-    Shader fontShader2("assets/Shaders/FontVertexShader.glsl", "assets/Shaders/FontFragmentShader.glsl");
     FontConfigs fontConfigs(18);
     // ### End Font Configs
 
@@ -90,11 +93,11 @@ int main() {
     inputText.characters(fontConfigs.Characters);
 
     InputText input2(window, WINDOW_W, WINDOW_H);
-    input2.fontShader(&fontShader2);
+    input2.fontShader(&fontShader);
     input2.characters(fontConfigs.Characters);
+    input2.text("My Default Text");
 
     TextDraw playerText(&fontShader, WINDOW_W, WINDOW_H);
-
     playerText.characters(fontConfigs.Characters);
     playerText.color(glm::vec3(0.5, 0.8f, 0.2f));
 
@@ -126,21 +129,26 @@ int main() {
         player.render();
 
         // Render Text
-        playerText.x(0.0f);
-        playerText.y(0.0f);
+        playerText.x(1.0f);
+        playerText.y(1.0f);
         playerText.scale(1.0f);
         playerText.text("Created By Cod3r Kane");
         playerText.render();
 
+        inputText.setupInputs(mouseButton, mouseAction, keyboardkey, charCodePoint);
         inputText.x(-0.4f);
         inputText.render();
         inputText.receiveKeyboardEvents();
 
-        input2.x(0.4f);
-        input2.render();
+        input2.setupInputs(mouseButton, mouseAction, keyboardkey, charCodePoint);
+        input2.x(0.3f);
         input2.receiveKeyboardEvents();
+        input2.render();
 
         glfwSwapBuffers(window);
+        // clean inputs
+        keyboardkey = 0;
+        charCodePoint = 0;
     }
 
     glfwDestroyWindow(window);

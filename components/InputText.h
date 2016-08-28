@@ -34,6 +34,8 @@ class InputText {
     bool isActive = false;
     bool isMouseOver = false;
     TextDraw textDraw = TextDraw();
+    int MouseButton, MouseAction, keyboardKey;
+    unsigned int codepoint;
 
     // Esses métodos estaticos precisam sumir logo, o ideal é termos um unico GLFWsetMousePositionCallback e e GLFWSetMouseButtonCallback
     // Mas para fazermos isso precisamos terminar nossa Classe de Window(GameWindow) e GameLoop.
@@ -44,9 +46,6 @@ class InputText {
     void setUpTextDraw();
     void renderTextDraw();
 public:
-    static int MouseButton, MouseAction, keyboardKey;
-    static unsigned int codepoint;
-
     InputText(GLFWwindow* window, int windowWidth, int windowHeight);
     ~InputText();
     void render();
@@ -57,6 +56,11 @@ public:
     void text(string text);
     string text();
     void receiveKeyboardEvents();
+    void mouseButton(int button);
+    void mouseAction(int action);
+    void keyboardKeyCode(int key);
+    void codePoint(unsigned int code);
+    void setupInputs(int button, int action, int key, unsigned int code);
 };
 
 

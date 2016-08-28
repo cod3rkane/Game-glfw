@@ -9,10 +9,6 @@ double InputText::mouseXpos = 0.0f;
 double InputText::mouseYPos = 0.0f;
 int InputText::windowW = 0;
 int InputText::windowH = 0;
-int InputText::MouseButton = 0;
-int InputText::MouseAction = 0;
-int InputText::keyboardKey = 0;
-unsigned int InputText::codepoint = 0;
 string InputText::convertCharToString = "";
 
 InputText::InputText(GLFWwindow *window, int windowWidth, int windowHeight) {
@@ -214,6 +210,29 @@ void InputText::receiveKeyboardEvents() {
 
     this->keyboardKey = 0;
     this->codepoint = 0;
+}
+
+void InputText::mouseButton(int button) {
+    this->MouseButton = button;
+}
+
+void InputText::mouseAction(int action) {
+    this->MouseAction = action;
+}
+
+void InputText::keyboardKeyCode(int key) {
+    this->keyboardKey = key;
+}
+
+void InputText::codePoint(unsigned int code) {
+    this->codepoint = code;
+}
+
+void InputText::setupInputs(int button, int action, int key, unsigned int code) {
+    this->MouseButton= button;
+    this->MouseAction = action;
+    this->keyboardKey = key;
+    this->codepoint = code;
 }
 
 InputText::~InputText() {

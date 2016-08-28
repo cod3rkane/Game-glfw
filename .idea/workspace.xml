@@ -16,8 +16,6 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/components/InputText.cpp" afterPath="$PROJECT_DIR$/components/InputText.cpp" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/components/InputText.h" afterPath="$PROJECT_DIR$/components/InputText.h" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main.cpp" afterPath="$PROJECT_DIR$/main.cpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/util/Shader.cpp" afterPath="$PROJECT_DIR$/util/Shader.cpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/util/Shader.h" afterPath="$PROJECT_DIR$/util/Shader.h" />
     </list>
     <ignored path="Game.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -47,55 +45,13 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="main.cpp" pinned="false" current-in-tab="false">
+      <file leaf-file-name="main.cpp" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="485">
-              <caret line="136" column="32" selection-start-line="136" selection-start-column="32" selection-end-line="136" selection-end-column="32" />
+            <state relative-caret-position="-34">
+              <caret line="50" column="45" selection-start-line="50" selection-start-column="45" selection-end-line="50" selection-end-column="45" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="FontVertexShader.glsl" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/assets/Shaders/FontVertexShader.glsl">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="8" column="4" selection-start-line="8" selection-start-column="4" selection-end-line="8" selection-end-column="57" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="FontFragmentShader.glsl" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/assets/Shaders/FontFragmentShader.glsl">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="4" column="22" selection-start-line="4" selection-start-column="18" selection-end-line="4" selection-end-column="22" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="TextDraw.cpp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/components/TextDraw.cpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1054">
-              <caret line="16" column="15" selection-start-line="16" selection-start-column="15" selection-end-line="16" selection-end-column="15" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="TextDraw.h" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/components/TextDraw.h">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-41">
-              <caret line="22" column="12" selection-start-line="22" selection-start-column="12" selection-end-line="22" selection-end-column="12" />
-              <folding>
-                <element signature="e#92#112#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -104,42 +60,20 @@
       <file leaf-file-name="InputText.cpp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/components/InputText.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3638">
-              <caret line="214" column="0" selection-start-line="214" selection-start-column="0" selection-end-line="215" selection-end-column="24" />
+            <state relative-caret-position="634">
+              <caret line="234" column="27" selection-start-line="234" selection-start-column="27" selection-end-line="234" selection-end-column="27" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="InputText.h" pinned="false" current-in-tab="true">
+      <file leaf-file-name="InputText.h" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/components/InputText.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="544">
-              <caret line="47" column="33" selection-start-line="47" selection-start-column="33" selection-end-line="47" selection-end-column="33" />
+            <state relative-caret-position="583">
+              <caret line="62" column="73" selection-start-line="62" selection-start-column="73" selection-end-line="62" selection-end-column="73" />
               <folding>
                 <element signature="e#93#113#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Shader.cpp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/util/Shader.cpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="277">
-              <caret line="68" column="0" selection-start-line="68" selection-start-column="0" selection-end-line="68" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Shader.h" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/util/Shader.h">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="16" column="22" selection-start-line="16" selection-start-column="21" selection-end-line="16" selection-end-column="22" />
-              <folding>
-                <element signature="e#85#104#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -179,10 +113,10 @@
         <option value="$PROJECT_DIR$/assets/Shaders/Color-Position-Projection.frag" />
         <option value="$PROJECT_DIR$/components/TextDraw.h" />
         <option value="$PROJECT_DIR$/util/FontConfigs.cpp" />
-        <option value="$PROJECT_DIR$/components/InputText.h" />
         <option value="$PROJECT_DIR$/components/TextDraw.cpp" />
         <option value="$PROJECT_DIR$/util/Shader.h" />
         <option value="$PROJECT_DIR$/util/Shader.cpp" />
+        <option value="$PROJECT_DIR$/components/InputText.h" />
         <option value="$PROJECT_DIR$/components/InputText.cpp" />
         <option value="$PROJECT_DIR$/main.cpp" />
       </list>
@@ -538,12 +472,12 @@
       <workItem from="1472081959497" duration="14956000" />
       <workItem from="1472169924242" duration="9433000" />
       <workItem from="1472309403646" duration="28553000" />
-      <workItem from="1472346294235" duration="19859000" />
+      <workItem from="1472346294235" duration="24678000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="184604000" />
+    <option name="totallyTimeSpent" value="189423000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1066" extended-state="6" />
@@ -582,7 +516,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="45" />
+      <option name="time" value="48" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -833,11 +767,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/assets/Shaders/FontVertexShader.glsl">
+    <entry file="file://$PROJECT_DIR$/components/TextDraw.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="4" selection-start-line="8" selection-start-column="4" selection-end-line="8" selection-end-column="57" />
-          <folding />
+        <state relative-caret-position="-41">
+          <caret line="22" column="12" selection-start-line="22" selection-start-column="12" selection-end-line="22" selection-end-column="12" />
+          <folding>
+            <element signature="e#92#112#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -849,13 +785,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/components/TextDraw.h">
+    <entry file="file://$PROJECT_DIR$/assets/Shaders/FontVertexShader.glsl">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-41">
-          <caret line="22" column="12" selection-start-line="22" selection-start-column="12" selection-end-line="22" selection-end-column="12" />
-          <folding>
-            <element signature="e#92#112#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="136">
+          <caret line="8" column="4" selection-start-line="8" selection-start-column="4" selection-end-line="8" selection-end-column="57" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -875,16 +809,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="485">
-          <caret line="136" column="32" selection-start-line="136" selection-start-column="32" selection-end-line="136" selection-end-column="32" />
-          <folding>
-            <element signature="e#0#19#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/util/Shader.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="272">
@@ -897,26 +821,36 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/util/Shader.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="277">
-          <caret line="68" column="0" selection-start-line="68" selection-start-column="0" selection-end-line="68" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/components/InputText.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3638">
-          <caret line="214" column="0" selection-start-line="214" selection-start-column="0" selection-end-line="215" selection-end-column="24" />
+        <state relative-caret-position="102">
+          <caret line="42" column="7" selection-start-line="42" selection-start-column="7" selection-end-line="42" selection-end-column="7" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/components/InputText.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="544">
-          <caret line="47" column="33" selection-start-line="47" selection-start-column="33" selection-end-line="47" selection-end-column="33" />
+        <state relative-caret-position="583">
+          <caret line="62" column="73" selection-start-line="62" selection-start-column="73" selection-end-line="62" selection-end-column="73" />
           <folding>
             <element signature="e#93#113#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/components/InputText.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="634">
+          <caret line="234" column="27" selection-start-line="234" selection-start-column="27" selection-end-line="234" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-34">
+          <caret line="50" column="45" selection-start-line="50" selection-start-column="45" selection-end-line="50" selection-end-column="45" />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
           </folding>
         </state>
       </provider>
