@@ -9,6 +9,12 @@ TextDraw::TextDraw(Shader *shader, int windowWidth, int windowHeight) {
     this->windowW = windowWidth;
     this->windowH = windowHeight;
 
+    this->setupGL();
+}
+
+TextDraw::TextDraw() {}
+
+void TextDraw::setupGL() {
     glm::mat4 projection = glm::ortho(0.0f, static_cast<GLfloat>(this->windowW), 0.0f,
                                       static_cast<GLfloat>(this->windowH));
     this->myShader->use();
@@ -81,6 +87,22 @@ map<GLchar, Character> TextDraw::characters() {
 
 void TextDraw::characters(map<GLchar, Character> characters) {
     this->Characters = characters;
+}
+
+void TextDraw::windowWidth(int width) {
+    this->windowW = width;
+}
+
+void TextDraw::windowHeight(int height) {
+    this->windowH = height;
+}
+
+int TextDraw::windowWidth() {
+    return this->windowW;
+}
+
+int TextDraw::windowHeight() {
+    return this->windowH;
 }
 
 void TextDraw::render() {

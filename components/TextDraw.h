@@ -43,7 +43,9 @@ class TextDraw {
     std::map<GLchar, Character> Characters;
 public:
     TextDraw(Shader* shader, int windowWidth, int windowHeight);
+    TextDraw();
     ~TextDraw();
+    void setupGL();
     void shader(Shader* shader);
     Shader* shader();
     void text(string text);
@@ -58,6 +60,10 @@ public:
     glm::vec3 color();
     void characters(map<GLchar, Character> characters);
     map<GLchar, Character> characters();
+    void windowWidth(int width);
+    int windowWidth();
+    void windowHeight(int height);
+    int windowHeight();
     /**
      * Draw my text
      */
