@@ -36,6 +36,7 @@ class InputText {
     TextDraw textDraw = TextDraw();
     int MouseButton, MouseAction, keyboardKey;
     unsigned int codepoint;
+    int characterLimiter = 30;
 
     // Esses métodos estaticos precisam sumir logo, o ideal é termos um unico GLFWsetMousePositionCallback e e GLFWSetMouseButtonCallback
     // Mas para fazermos isso precisamos terminar nossa Classe de Window(GameWindow) e GameLoop.
@@ -61,6 +62,8 @@ public:
     void keyboardKeyCode(int key);
     void codePoint(unsigned int code);
     void setupInputs(int button, int action, int key, unsigned int code);
+    void maxCharacter(int max);
+    int maxCharacter();
 };
 
 

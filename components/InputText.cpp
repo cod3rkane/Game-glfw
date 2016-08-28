@@ -191,7 +191,7 @@ string InputText::text() {
 
 void InputText::receiveKeyboardEvents() {
     if (this->isActive && this->codepoint) {
-        if (this->inputText.length() <= 30) {
+        if (this->inputText.length() <= this->characterLimiter) {
             this->convertCharToString = (char)this->codepoint;
             this->inputText.append(this->convertCharToString);
         }
@@ -233,6 +233,14 @@ void InputText::setupInputs(int button, int action, int key, unsigned int code) 
     this->MouseAction = action;
     this->keyboardKey = key;
     this->codepoint = code;
+}
+
+void InputText::maxCharacter(int max) {
+    this->characterLimiter = max;
+}
+
+int InputText::maxCharacter() {
+    return this->characterLimiter;
 }
 
 InputText::~InputText() {
