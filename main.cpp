@@ -22,6 +22,16 @@ static void keyCallBack(GLFWwindow *window, int key, int scancode, int action, i
         glfwSetWindowShouldClose(window, GLFW_TRUE);
 }
 
+static void mouseButtonCallback(GLFWwindow* window, int button, int action, int mods) {
+    InputText::MouseButton = button;
+    InputText::MouseAction = action;
+}
+
+void character_callback(GLFWwindow* window, unsigned int codepoint) {
+    InputText::codepoint = codepoint;
+//    cout << static_cast<unsigned char>(static_cast<unsigned int>(codepoint)) << endl;
+}
+
 int main() {
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
@@ -41,6 +51,8 @@ int main() {
 
     glfwSetErrorCallback(error_callback);
     glfwSetKeyCallback(window, keyCallBack);
+    glfwSetMouseButtonCallback(window, mouseButtonCallback);
+    glfwSetCharCallback(window, character_callback);
     glfwMakeContextCurrent(window);
 
     glewExperimental = GL_TRUE;
@@ -48,8 +60,6 @@ int main() {
         cout << "Failed to initialize Glew" << endl;
         return -1;
     }
-
-    InputText inputText(window, WINDOW_W, WINDOW_H);
 
     glEnable(GL_DEPTH);
     glDepthFunc(GL_LESS);
@@ -67,7 +77,12 @@ int main() {
     FontConfigs fontConfigs(18);
     // ### End Font Configs
 
+    InputText inputText(window, WINDOW_W, WINDOW_H);
+    inputText.fontShader(&fontShader);
+    inputText.characters(fontConfigs.Characters);
+
     TextDraw playerText(&fontShader, WINDOW_W, WINDOW_H);
+
     playerText.characters(fontConfigs.Characters);
     playerText.color(glm::vec3(0.5, 0.8f, 0.2f));
 
@@ -99,14 +114,15 @@ int main() {
         player.render();
 
         // Render Text
-        playerText.x(5.0f);
-        playerText.y(5.0f);
+        playerText.x(0.0f);
+        playerText.y(0.0f);
         playerText.scale(1.0f);
         playerText.text("Created By Cod3r Kane");
         playerText.render();
 
-//        inputText.x(0.78f);
+        inputText.x(-0.4f);
         inputText.render();
+        inputText.receiveKeyboardEvents();
 
         glfwSwapBuffers(window);
     }

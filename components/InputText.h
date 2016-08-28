@@ -12,28 +12,51 @@
 #include <GL/gl.h>
 #include <ext.hpp>
 #include <list>
+#include "TextDraw.h"
+#include <map>
+#include "../util/Character.h"
 
 using namespace std;
 
 class InputText {
-    static void cursorPositionCallBack(GLFWwindow*, double xpos, double ypos);
+    string inputText;
+    static string convertCharToString;
     static double mouseXpos, mouseYPos;
     static int windowW, windowH;
     GLuint VBO[2], VAO, EBO;
     Shader shader = Shader("assets/Shaders/Color-Position-Projection.vert", "assets/Shaders/Color-Position-Projection.frag");
+    Shader* FontShader;
     GLfloat xPos = 0.0f;
     GLfloat yPos = 0.0f;
     GLfloat xScale = 0.3f;
     GLfloat yScale = 0.04f;
     GLfloat opacity = 1.0f;
+    bool isActive = false;
+    bool isMouseOver = false;
+    TextDraw textDraw = TextDraw();
 
+    // Esses métodos estaticos precisam sumir logo, o ideal é termos um unico GLFWsetMousePositionCallback e e GLFWSetMouseButtonCallback
+    // Mas para fazermos isso precisamos terminar nossa Classe de Window(GameWindow) e GameLoop.
+    // @todo remove cursorPositionCallBack and mouseButtonCallback when Window and GameLoop Class done.
+    static void cursorPositionCallBack(GLFWwindow* window, double xpos, double ypos);
     void mouseOver();
+    void mouseClick();
+    void setUpTextDraw();
+    void renderTextDraw();
 public:
+    static int MouseButton, MouseAction;
+    static unsigned int codepoint;
+
     InputText(GLFWwindow* window, int windowWidth, int windowHeight);
     ~InputText();
     void render();
     void x(GLfloat xpos);
     void y(GLfloat ypos);
+    void fontShader(Shader* shader);
+    void characters(map<GLchar, Character> characters);
+    void text(string text);
+    string text();
+    void receiveKeyboardEvents();
 };
 
 
