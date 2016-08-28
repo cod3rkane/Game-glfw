@@ -2,9 +2,6 @@
 // Created by jlopes on 7/21/16.
 //
 
-#include <fstream>
-#include <sstream>
-#include <GL/glew.h>
 #include "Shader.h"
 
 Shader::Shader(const GLchar *vertexPath, const GLchar *fragmentPath) {
@@ -66,6 +63,10 @@ Shader::Shader(const GLchar *vertexPath, const GLchar *fragmentPath) {
     }
     // Shader Program
     this->program = glCreateProgram();
+    if (this->program == 0) {
+        cout << "ERROR::SHADER::PROGRAM:: on glCreateProgram" << endl;
+    }
+
     glAttachShader(this->program, vertex);
     glAttachShader(this->program, fragment);
     glLinkProgram(this->program);

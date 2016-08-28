@@ -6,12 +6,15 @@
 #define GAME_SHADER_H
 
 #include <iostream>
+#include <fstream>
+#include <sstream>
+#include <GL/glew.h>
 
 using namespace std;
 
 class Shader {
 public:
-    GLuint program;
+    GLuint program = 0;
 
     Shader(const GLchar* vertexPath, const GLchar* fragmentPath);
     ~Shader();

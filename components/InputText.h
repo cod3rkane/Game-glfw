@@ -44,7 +44,7 @@ class InputText {
     void setUpTextDraw();
     void renderTextDraw();
 public:
-    static int MouseButton, MouseAction;
+    static int MouseButton, MouseAction, keyboardKey;
     static unsigned int codepoint;
 
     InputText(GLFWwindow* window, int windowWidth, int windowHeight);

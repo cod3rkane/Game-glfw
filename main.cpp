@@ -18,8 +18,15 @@ static void error_callback(int error, const char *desc) {
 }
 
 static void keyCallBack(GLFWwindow *window, int key, int scancode, int action, int mods) {
-    if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
-        glfwSetWindowShouldClose(window, GLFW_TRUE);
+    if (action == GLFW_PRESS || action == GLFW_REPEAT) {
+        InputText::keyboardKey = key;
+        if (key == GLFW_KEY_ESCAPE) {
+            glfwSetWindowShouldClose(window, GLFW_TRUE);
+        }
+    } else if (action == GLFW_RELEASE) {
+        InputText::keyboardKey = 0;
+    }
+
 }
 
 static void mouseButtonCallback(GLFWwindow* window, int button, int action, int mods) {
@@ -27,7 +34,7 @@ static void mouseButtonCallback(GLFWwindow* window, int button, int action, int 
     InputText::MouseAction = action;
 }
 
-void character_callback(GLFWwindow* window, unsigned int codepoint) {
+void character_callback(GLFWwindow* window, unsigned int codepoint, int mods) {
     InputText::codepoint = codepoint;
 //    cout << static_cast<unsigned char>(static_cast<unsigned int>(codepoint)) << endl;
 }
@@ -52,7 +59,7 @@ int main() {
     glfwSetErrorCallback(error_callback);
     glfwSetKeyCallback(window, keyCallBack);
     glfwSetMouseButtonCallback(window, mouseButtonCallback);
-    glfwSetCharCallback(window, character_callback);
+    glfwSetCharModsCallback(window, character_callback);
     glfwMakeContextCurrent(window);
 
     glewExperimental = GL_TRUE;
@@ -74,12 +81,17 @@ int main() {
 
     // ### Font Configs
     Shader fontShader("assets/Shaders/FontVertexShader.glsl", "assets/Shaders/FontFragmentShader.glsl");
+    Shader fontShader2("assets/Shaders/FontVertexShader.glsl", "assets/Shaders/FontFragmentShader.glsl");
     FontConfigs fontConfigs(18);
     // ### End Font Configs
 
     InputText inputText(window, WINDOW_W, WINDOW_H);
     inputText.fontShader(&fontShader);
     inputText.characters(fontConfigs.Characters);
+
+    InputText input2(window, WINDOW_W, WINDOW_H);
+    input2.fontShader(&fontShader2);
+    input2.characters(fontConfigs.Characters);
 
     TextDraw playerText(&fontShader, WINDOW_W, WINDOW_H);
 
@@ -123,6 +135,10 @@ int main() {
         inputText.x(-0.4f);
         inputText.render();
         inputText.receiveKeyboardEvents();
+
+        input2.x(0.4f);
+        input2.render();
+        input2.receiveKeyboardEvents();
 
         glfwSwapBuffers(window);
     }

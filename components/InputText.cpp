@@ -11,6 +11,7 @@ int InputText::windowW = 0;
 int InputText::windowH = 0;
 int InputText::MouseButton = 0;
 int InputText::MouseAction = 0;
+int InputText::keyboardKey = 0;
 unsigned int InputText::codepoint = 0;
 string InputText::convertCharToString = "";
 
@@ -72,8 +73,6 @@ InputText::InputText(GLFWwindow *window, int windowWidth, int windowHeight) {
     // Map index 1 to the color buffer
     glBindBuffer(GL_ARRAY_BUFFER, colorBufferHandle);
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 3, (GLvoid *) 0);
-
-    this->setUpTextDraw();
 }
 
 /**
@@ -101,9 +100,13 @@ void InputText::render() {
 
     this->shader.use();
 
+    if (this->isActive) {
+        this->opacity = 0.6f;
+    }
+
     // set-up color
     GLint vertexColorLocation = glGetUniformLocation(this->shader.program, "ourColor");
-    glUniform4f(vertexColorLocation, 0.50f, 0.49f, 0.49f, this->opacity);
+    glUniform4f(vertexColorLocation, 1.00f, 1.0f, 1.0f, this->opacity);
 
     // set-up transform
     glm::mat4 projection;
@@ -152,10 +155,11 @@ void InputText::mouseClick() {
 
 void InputText::fontShader(Shader *shader) {
     this->textDraw.shader(shader);
+    this->setUpTextDraw();
 }
 
 void InputText::setUpTextDraw() {
-    this->textDraw.color(glm::vec3(0.5, 0.8f, 0.2f));
+    this->textDraw.color(glm::vec3(0.0, 0.0f, 0.0f));
     this->textDraw.windowWidth(this->windowW);
     this->textDraw.windowHeight(this->windowH);
     this->textDraw.setupGL();
@@ -166,7 +170,14 @@ void InputText::characters(map<GLchar, Character> characters) {
 }
 
 void InputText::renderTextDraw() {
+    /**
+     * Convert x position -1 a 1 in window size positionn ex: 1 = 1920
+     */
     this->textDraw.x(((this->xPos - this->xScale) + 1.0f) * (this->windowW / 2.0f));
+
+    /**
+     * Convert y position -1 a 1 in window size position ex: -1 = 0
+     */
     this->textDraw.y((-(this->yPos + (this->yScale / 2)) + 1.0f) * (this->windowH / 2.f));
     // Max input string length is 38 characters
     this->textDraw.text(this->inputText);
@@ -184,10 +195,24 @@ string InputText::text() {
 
 void InputText::receiveKeyboardEvents() {
     if (this->isActive && this->codepoint) {
-        this->convertCharToString = (char)this->codepoint;
-        this->inputText.append(this->convertCharToString);
+        if (this->inputText.length() <= 30) {
+            this->convertCharToString = (char)this->codepoint;
+            this->inputText.append(this->convertCharToString);
+        }
+    } else if (this->isActive && this->keyboardKey) {
+        switch (this->keyboardKey) {
+            case GLFW_KEY_BACKSPACE:
+                if (this->inputText.length() > 0) {
+                    this->inputText.resize((this->inputText.length() - 1));
+                }
+                break;
+            default:
+                // do nothing
+                break;
+        }
     }
 
+    this->keyboardKey = 0;
     this->codepoint = 0;
 }
 
