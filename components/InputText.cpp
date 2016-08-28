@@ -16,13 +16,6 @@ InputText::InputText(GLFWwindow *window, int windowWidth, int windowHeight) {
     this->windowH = windowHeight;
     // Set cursor position callback
     glfwSetCursorPosCallback(window, this->cursorPositionCallBack);
-    GLfloat positionData[] = {
-            this->xScale, this->yScale,
-            this->xScale, -this->yScale,
-            -this->xScale, -this->yScale,
-            -this->xScale, this->yScale
-    };
-
     GLfloat colorData[] = {
             0.50f, 0.49f, 0.49f,
             0.50f, 0.49f, 0.49f,
@@ -36,7 +29,6 @@ InputText::InputText(GLFWwindow *window, int windowWidth, int windowHeight) {
 
     // Buffer Object
     glGenBuffers(2, this->VBO);
-    GLuint positionBufferHandle = this->VBO[0];
     GLuint colorBufferHandle = this->VBO[1];
 
     // Create and set-up the Element Buffer object
@@ -45,10 +37,6 @@ InputText::InputText(GLFWwindow *window, int windowWidth, int windowHeight) {
             0, 2, 3,
             0, 2, 1
     };
-
-    // Populate position Buffer
-    glBindBuffer(GL_ARRAY_BUFFER, positionBufferHandle);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(positionData), positionData, GL_STATIC_DRAW);
 
     // Populate color buffer
     glBindBuffer(GL_ARRAY_BUFFER, colorBufferHandle);
@@ -59,16 +47,34 @@ InputText::InputText(GLFWwindow *window, int windowWidth, int windowHeight) {
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
     // Enable the vertex attribute array
-    glEnableVertexAttribArray(0); // Position
     glEnableVertexAttribArray(1); // Color
-
-    // Map index 0 to the position buffer
-    glBindBuffer(GL_ARRAY_BUFFER, positionBufferHandle);
-    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 2, (GLvoid *) 0);
 
     // Map index 1 to the color buffer
     glBindBuffer(GL_ARRAY_BUFFER, colorBufferHandle);
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 3, (GLvoid *) 0);
+}
+
+void InputText::setUpPosition() {
+    GLuint positionBufferHandle = this->VBO[0];
+    GLfloat positionData[] = {
+            this->xScale, this->yScale,
+            this->xScale, -this->yScale,
+            -this->xScale, -this->yScale,
+            -this->xScale, this->yScale
+    };
+
+    glBindVertexArray(this->VAO);
+
+    // Populate position Buffer
+    glBindBuffer(GL_ARRAY_BUFFER, positionBufferHandle);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(positionData), positionData, GL_STATIC_DRAW);
+
+    // Enable the vertex attribute array
+    glEnableVertexAttribArray(0); // Position
+
+    // Map index 0 to the position buffer
+    glBindBuffer(GL_ARRAY_BUFFER, positionBufferHandle);
+    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 2, (GLvoid *) 0);
 }
 
 /**
@@ -174,8 +180,7 @@ void InputText::renderTextDraw() {
     /**
      * Convert y position -1 a 1 in window size position ex: -1 = 0
      */
-    this->textDraw.y((-(this->yPos + (this->yScale / 2)) + 1.0f) * (this->windowH / 2.f));
-    // Max input string length is 38 characters
+    this->textDraw.y((-(this->yPos + (this->yScale / 2.8)) + 1.0f) * (this->windowH / 2.f));
     this->textDraw.text(this->inputText);
     this->textDraw.scale(1.0f);
     this->textDraw.render();
@@ -241,6 +246,14 @@ void InputText::maxCharacter(int max) {
 
 int InputText::maxCharacter() {
     return this->characterLimiter;
+}
+
+void InputText::scaleY(GLfloat y) {
+    this->yScale = y;
+}
+
+void InputText::scaleX(GLfloat x) {
+    this->xScale = x;
 }
 
 InputText::~InputText() {

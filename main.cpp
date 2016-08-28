@@ -10,8 +10,13 @@
 
 using namespace std;
 
-const int WINDOW_W = 1280;
-const int WINDOW_H = 720;
+// default window size
+int WINDOW_W = 1280;
+int WINDOW_H = 720;
+
+GLFWwindow *window;
+GLFWmonitor* monitor;
+const GLFWvidmode* mode;
 
 // @todo remove these variables when GameLoop and GameWindow done.
 int keyboardkey, mouseButton, mouseAction;
@@ -26,6 +31,11 @@ static void keyCallBack(GLFWwindow *window, int key, int scancode, int action, i
         keyboardkey = key;
         if (key == GLFW_KEY_ESCAPE) {
             glfwSetWindowShouldClose(window, GLFW_TRUE);
+        }
+
+        if (key == GLFW_KEY_F11) {
+            // Set full screen window
+            glfwSetWindowMonitor(window, monitor, 0, 0, mode->width, mode->height, mode->refreshRate);
         }
     } else if (action == GLFW_RELEASE) {
         keyboardkey = 0;
@@ -50,7 +60,10 @@ int main() {
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
 
-    GLFWwindow *window = glfwCreateWindow(WINDOW_W, WINDOW_H, "Project Melkor - Roch Studio", NULL, NULL);
+    monitor = glfwGetPrimaryMonitor();
+    mode = glfwGetVideoMode(monitor);
+
+    window = glfwCreateWindow(mode->width, mode->height, "Project Melkor - Roch Studio", monitor, NULL);
     if (!window) {
         cout << "could not create Window" << endl;
         glfwTerminate();
@@ -77,7 +90,7 @@ int main() {
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glMatrixMode(GL_PROJECTION);
-    glViewport(0, 0, WINDOW_W, WINDOW_H);
+    glViewport(0, 0, mode->width, mode->height);
     glMatrixMode(GL_MODELVIEW);
 
 
@@ -88,16 +101,21 @@ int main() {
     FontConfigs fontConfigs(18);
     // ### End Font Configs
 
-    InputText inputText(window, WINDOW_W, WINDOW_H);
+    InputText inputText(window, mode->width, mode->height);
+//    inputText.maxCharacter(45);
+    inputText.scaleX(0.2);
+    inputText.scaleY(0.03);
     inputText.fontShader(&fontShader);
     inputText.characters(fontConfigs.Characters);
+    inputText.setUpPosition();
 
-    InputText input2(window, WINDOW_W, WINDOW_H);
+    InputText input2(window, mode->width, mode->height);
     input2.fontShader(&fontShader);
     input2.characters(fontConfigs.Characters);
     input2.text("My Default Text");
+    input2.setUpPosition();
 
-    TextDraw playerText(&fontShader, WINDOW_W, WINDOW_H);
+    TextDraw playerText(&fontShader, mode->width, mode->height);
     playerText.characters(fontConfigs.Characters);
     playerText.color(glm::vec3(0.5, 0.8f, 0.2f));
 

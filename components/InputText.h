@@ -64,6 +64,9 @@ public:
     void setupInputs(int button, int action, int key, unsigned int code);
     void maxCharacter(int max);
     int maxCharacter();
+    void scaleY(GLfloat y);
+    void scaleX(GLfloat x);
+    void setUpPosition();
 };
 
 
