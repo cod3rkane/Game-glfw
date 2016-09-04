@@ -25,15 +25,23 @@ void Square::setupGL(GLfloat *color) {
             color[0], color[1], color[2]
     };
 
+    GLfloat textureData[] = {
+            1.0f, 1.0f,
+            1.0f, 0.0f,
+            0.0f, 0.0f,
+            0.0f, 1.0f
+    };
+
     GLuint indices[] = {
             0, 1, 3, // First Triangle
             1, 2, 3  // Second Triangle
     };
 
     glGenVertexArrays(1, &this->VAO);
-    glGenBuffers(2, this->VBO);
+    glGenBuffers(3, this->VBO);
     GLuint posititionBufferHandle = this->VBO[0];
     GLuint colorBufferHandle = this->VBO[1];
+    GLuint textureBufferHandle = this->VBO[2];
     glGenBuffers(1, &this->EBO);
 
     glBindVertexArray(this->VAO);
@@ -46,12 +54,17 @@ void Square::setupGL(GLfloat *color) {
     glBindBuffer(GL_ARRAY_BUFFER, colorBufferHandle);
     glBufferData(GL_ARRAY_BUFFER, sizeof(myColor), myColor, GL_STATIC_DRAW);
 
+    // Vertex Texture
+    glBindBuffer(GL_ARRAY_BUFFER, textureBufferHandle);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(textureData), textureData, GL_STATIC_DRAW);
+
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->EBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
     // enable vertex attribute location 0 Position
     glEnableVertexAttribArray(0); // Vertex Position
     glEnableVertexAttribArray(1); // Vertex Color
+    glEnableVertexAttribArray(2); // Vertex Color
 
     glBindBuffer(GL_ARRAY_BUFFER, posititionBufferHandle);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), NULL);
@@ -59,7 +72,37 @@ void Square::setupGL(GLfloat *color) {
     glBindBuffer(GL_ARRAY_BUFFER, colorBufferHandle);
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, NULL);
 
+    glBindBuffer(GL_ARRAY_BUFFER, textureBufferHandle);
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, NULL);
+
     glBindVertexArray(0); // unbind VAO
+}
+
+void Square::textureImage(unsigned char *image, int width, int height) {
+    try {
+        // Load and create myTexture
+        glGenTextures(1, &this->myTexture);
+        glBindTexture(GL_TEXTURE_2D, this->myTexture);
+        // Set out myTexture parameters
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
+        // Set myTexture filtering
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
+        glGenerateMipmap(GL_TEXTURE_2D);
+        // Free memory image
+        SOIL_free_image_data(image);
+        glBindVertexArray(0);
+        glBindTexture(GL_TEXTURE_2D, 0);
+    } catch (unsigned char *image) {
+        cout << "couldn't load image because: " << image << endl;
+        throw "Error";
+    } catch (int num) {
+        cout << "couldn't load image because: " << num << endl;
+        throw "Error";
+    }
 }
 
 void Square::render() {
@@ -67,6 +110,13 @@ void Square::render() {
         this->shaderPoint->use();
     } catch (GLuint e) {
         cout << "GLuint error on Use Square::shaderPoint" << endl;
+    }
+
+    if (this->myTexture) {
+        // Bind myTexture using myTexture units
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, this->myTexture);
+        glUniform1i(glGetUniformLocation(this->shaderPoint->program, "ourTexture"), 0);
     }
 
     glm::mat4 model, view, projection;
@@ -127,6 +177,6 @@ void Square::windowH(int height) {
 
 Square::~Square() {
     glDeleteVertexArrays(1, &this->VAO);
-    glDeleteBuffers(2, this->VBO);
+    glDeleteBuffers(3, this->VBO);
     glDeleteBuffers(1, &this->EBO);
 }

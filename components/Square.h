@@ -9,10 +9,11 @@
 #include <glm/glm.hpp>
 #include <glm/ext.hpp>
 #include <GLFW/glfw3.h>
+#include <SOIL/SOIL.h>
 
 class Square {
     Shader* shaderPoint;
-    GLuint VAO, VBO[2], EBO;
+    GLuint VAO, VBO[3], EBO, myTexture = 0;
     GLfloat xPos = 0.0f, yPos = 0.0f, zPos = -1.0f;
     int windowWidth, windowHeight;
 public:
@@ -101,6 +102,14 @@ public:
      * @param heigth
      */
     void windowH(int height);
+
+    /**
+     * set the texture imge, used to draw textured object.
+     * @param image
+     * @param width
+     * @param height
+     */
+    void textureImage(unsigned char *image, int width, int height);
 };
 
 
