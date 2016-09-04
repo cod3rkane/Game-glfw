@@ -14,7 +14,7 @@
 class Square {
     Shader* shaderPoint;
     GLuint VAO, VBO[3], EBO, myTexture = 0;
-    GLfloat xPos = 0.0f, yPos = 0.0f, zPos = -1.0f;
+    GLfloat xPos = 0.0f, yPos = 0.0f, zPos = -1.0f, myScale = 0.2f;
     int windowWidth, windowHeight;
 public:
 
@@ -110,6 +110,8 @@ public:
      * @param height
      */
     void textureImage(unsigned char *image, int width, int height);
+
+    void scale(GLfloat scale);
 };
 
 

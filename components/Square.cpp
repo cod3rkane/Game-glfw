@@ -12,10 +12,10 @@ Square::Square(int windowWidth, int windowHeight, GLfloat color[]) {
 
 void Square::setupGL(GLfloat *color) {
     GLfloat vertices[] = {
-            0.2f,  0.2f, 0.0f,
-            0.2f, -0.2f, 0.0f,
-            -0.2f, -0.2f, 0.0f,
-            -0.2f,  0.2f, 0.0f
+            1,  1, 0.0f,
+            1, -1, 0.0f,
+            -1, -1, 0.0f,
+            -1,  1, 0.0f
     };
 
     GLfloat myColor[] = {
@@ -121,6 +121,7 @@ void Square::render() {
 
     glm::mat4 model, view, projection;
 //    model = glm::rotate(model, 0.0f, glm::vec3(1.0f, 0.0f, 0.0f));
+    model = glm::scale(model, glm::vec3(this->myScale, this->myScale, this->myScale));
     view = glm::translate(view, glm::vec3(this->xPos, this->yPos, this->zPos));
     projection = glm::perspective(45.0f, (GLfloat)this->windowWidth / this->windowHeight, 0.1f, 100.0f);
 
@@ -173,6 +174,10 @@ void Square::windowW(int width) {
 
 void Square::windowH(int height) {
     this->windowHeight = height;
+}
+
+void Square::scale(GLfloat scale) {
+    this->myScale = scale;
 }
 
 Square::~Square() {
