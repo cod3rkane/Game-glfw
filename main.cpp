@@ -175,7 +175,9 @@ int main() {
         input2.render();
 
         mySquare.render();
+
         mySquare2.x(0.2f);
+//        mySquare2.z(-0.999f);
         mySquare2.render();
 
         glfwSwapBuffers(window);

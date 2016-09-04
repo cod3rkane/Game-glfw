@@ -60,7 +60,6 @@ Square::Square(int windowWidth, int windowHeight, GLfloat color[]) {
 }
 
 void Square::render() {
-    glDisable(GL_DEPTH_TEST);
     try {
         this->shaderPoint->use();
     } catch (GLuint e) {
@@ -85,7 +84,6 @@ void Square::render() {
     glBindVertexArray(this->VAO);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
-    glEnable(GL_DEPTH_TEST);
 }
 
 void Square::shader(Shader *shader) {

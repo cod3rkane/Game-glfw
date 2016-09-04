@@ -8,6 +8,7 @@
 #include "../util/Shader.h"
 #include <glm/glm.hpp>
 #include <glm/ext.hpp>
+#include <GLFW/glfw3.h>
 
 class Square {
     Shader* shaderPoint;
