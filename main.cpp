@@ -7,6 +7,7 @@
 #include "util/FontConfigs.h"
 #include "components/TextDraw.h"
 #include "components/InputText.h"
+#include "components/Square.h"
 
 using namespace std;
 
@@ -71,7 +72,7 @@ int main() {
     }
 
     // Setting Window pos Center in Monitor 1920 - 1080
-    glfwSetWindowPos(window, 320, 180);
+//    glfwSetWindowPos(window, 320, 180);
 
     glfwSetErrorCallback(error_callback);
     glfwSetKeyCallback(window, keyCallBack);
@@ -86,6 +87,7 @@ int main() {
     }
 
     glEnable(GL_DEPTH);
+//    glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LESS);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -95,6 +97,17 @@ int main() {
 
 
     Shader triangleShader("assets/Shaders/VertexShader.glsl", "assets/Shaders/FragmentShader.glsl");
+    Shader modelViewProjection("assets/Shaders/ModelViewProjection.vert", "assets/Shaders/ModelViewProjection.frag");
+
+    GLfloat purpleColor[] = {0.09f, 0.95f, 0.14f};
+    GLfloat blueColor[] = {0.38f, 0.44f, 1.0f};
+    GLfloat redColor[] = {0.72f, 0.0f, 0.02f};
+
+    Square mySquare(mode->width, mode->height, purpleColor);
+    mySquare.shader(&modelViewProjection);
+
+    Square mySquare2(mode->width, mode->height, redColor);
+    mySquare2.shader(&modelViewProjection);
 
     // ### Font Configs
     Shader fontShader("assets/Shaders/FontVertexShader.glsl", "assets/Shaders/FontFragmentShader.glsl");
@@ -119,16 +132,14 @@ int main() {
     playerText.characters(fontConfigs.Characters);
     playerText.color(glm::vec3(0.5, 0.8f, 0.2f));
 
-    GLfloat blueColor[] = {0.38f, 0.44f, 1.0f};
-    GLfloat redColor[] = {0.72f, 0.0f, 0.02f};
-
-    Rectangle Enemy = Rectangle(redColor);
-    Enemy.shader(&triangleShader);
-    Enemy.y(0.78f);
+//    Rectangle Enemy = Rectangle(redColor);
+//    Enemy.shader(&triangleShader);
+//    Enemy.x(0.2f);
+//    Enemy.z(0.2f);
 
     Rectangle player = Rectangle(blueColor);
     player.shader(&triangleShader);
-    player.y(-0.78f);
+    player.z(0.0f);
     // Player Texture
     int imageW, imageH;
     unsigned char *image = SOIL_load_image("assets/images/container.jpg", &imageW, &imageH, 0, SOIL_LOAD_RGB);
@@ -140,11 +151,11 @@ int main() {
 
         // Game Logic here
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-//        glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+        glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 
         // Render Objects
-        Enemy.render();
-        player.render();
+//        Enemy.render();
+//        player.render();
 
         // Render Text
         playerText.x(1.0f);
@@ -154,14 +165,18 @@ int main() {
         playerText.render();
 
         inputText.setupInputs(mouseButton, mouseAction, keyboardkey, charCodePoint);
-        inputText.x(-0.4f);
+        inputText.x(-0.78f);
         inputText.render();
         inputText.receiveKeyboardEvents();
 
         input2.setupInputs(mouseButton, mouseAction, keyboardkey, charCodePoint);
-        input2.x(0.3f);
+        input2.x(0.78f);
         input2.receiveKeyboardEvents();
         input2.render();
+
+        mySquare.render();
+        mySquare2.x(0.2f);
+        mySquare2.render();
 
         glfwSwapBuffers(window);
         // clean inputs

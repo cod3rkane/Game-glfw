@@ -15,7 +15,7 @@ find_package(freetype REQUIRED)
 #pkg_search_module(GLFW REQUIRED glfw3)
 include_directories(${GLFW_INCLUDE_DIRS})
 
-set(SOURCE_FILES main.cpp components/Button.cpp components/Button.h util/Shader.cpp util/Shader.h components/Rectangle.cpp components/Rectangle.h util/FontConfigs.cpp util/FontConfigs.h util/Character.h components/TextDraw.cpp components/TextDraw.h components/InputText.cpp components/InputText.h)
+set(SOURCE_FILES main.cpp components/Button.cpp components/Button.h util/Shader.cpp util/Shader.h components/Rectangle.cpp components/Rectangle.h util/FontConfigs.cpp util/FontConfigs.h util/Character.h components/TextDraw.cpp components/TextDraw.h components/InputText.cpp components/InputText.h components/GUI/Menu.cpp components/GUI/Menu.h components/Square.cpp components/Square.h)
 add_executable(Game ${SOURCE_FILES})
 
 include_directories(${OPENGL_INCLUDE_DIRS} ${GLEW_INCLUDE_DIRS} ${OPENGL_INCLUDE_DIR})
