@@ -7,12 +7,15 @@
 Square::Square(int windowWidth, int windowHeight, GLfloat color[]) {
     this->windowWidth = windowWidth;
     this->windowHeight = windowHeight;
+    this->setupGL(color);
+}
 
+void Square::setupGL(GLfloat *color) {
     GLfloat vertices[] = {
-        0.2f,  0.2f, 0.0f,
-        0.2f, -0.2f, 0.0f,
-        -0.2f, -0.2f, 0.0f,
-        -0.2f,  0.2f, 0.0f
+            0.2f,  0.2f, 0.0f,
+            0.2f, -0.2f, 0.0f,
+            -0.2f, -0.2f, 0.0f,
+            -0.2f,  0.2f, 0.0f
     };
 
     GLfloat myColor[] = {
@@ -23,8 +26,8 @@ Square::Square(int windowWidth, int windowHeight, GLfloat color[]) {
     };
 
     GLuint indices[] = {
-        0, 1, 3, // First Triangle
-        1, 2, 3  // Second Triangle
+            0, 1, 3, // First Triangle
+            1, 2, 3  // Second Triangle
     };
 
     glGenVertexArrays(1, &this->VAO);
@@ -56,7 +59,7 @@ Square::Square(int windowWidth, int windowHeight, GLfloat color[]) {
     glBindBuffer(GL_ARRAY_BUFFER, colorBufferHandle);
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, NULL);
 
-//    glBindVertexArray(0); // unbind VAO
+    glBindVertexArray(0); // unbind VAO
 }
 
 void Square::render() {
@@ -94,15 +97,36 @@ void Square::x(GLfloat x) {
     this->xPos = x;
 }
 
+GLfloat Square::x() {
+    return this->xPos;
+}
+
 void Square::y(GLfloat y) {
     this->yPos = y;
+}
+
+GLfloat Square::y() {
+    return this->yPos;
 }
 
 void Square::z(GLfloat z) {
     this->zPos = z;
 }
 
-Square::~Square() {glDeleteVertexArrays(1, &this->VAO);
+GLfloat Square::z() {
+    return this->zPos;
+}
+
+void Square::windowW(int width) {
+    this->windowWidth = width;
+}
+
+void Square::windowH(int height) {
+    this->windowHeight = height;
+}
+
+Square::~Square() {
+    glDeleteVertexArrays(1, &this->VAO);
     glDeleteBuffers(2, this->VBO);
     glDeleteBuffers(1, &this->EBO);
 }
