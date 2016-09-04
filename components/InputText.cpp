@@ -97,6 +97,7 @@ void InputText::cursorPositionCallBack(GLFWwindow* window, double xpos, double y
 }
 
 void InputText::render() {
+    glDisable(GL_DEPTH_TEST);
     this->mouseOver();
     this->mouseClick();
 
@@ -123,6 +124,7 @@ void InputText::render() {
     glBindVertexArray(0);
 
     this->renderTextDraw();
+    glEnable(GL_DEPTH_TEST);
 }
 
 void InputText::x(GLfloat xpos) {
