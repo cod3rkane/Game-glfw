@@ -5,6 +5,10 @@
 #include "Shader.h"
 
 Shader::Shader(const GLchar *vertexPath, const GLchar *fragmentPath) {
+    this->setupGL(vertexPath, fragmentPath);
+}
+
+void Shader::setupGL(const GLchar *vertexPath, const GLchar *fragmentPath) {
     // 1. Retrieve the vertex/fragment source code from filePath
     std::string vertexCode;
     std::string fragmentCode;
