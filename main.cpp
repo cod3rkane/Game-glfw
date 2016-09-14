@@ -169,10 +169,12 @@ int main() {
 
         inputText.setupInputs(mouseButton, mouseAction, keyboardkey, charCodePoint);
         inputText.x(-0.78f);
+        inputText.y(0.78f);
         inputText.render();
         inputText.receiveKeyboardEvents();
 
         input2.setupInputs(mouseButton, mouseAction, keyboardkey, charCodePoint);
+        input2.y(0.78f);
         input2.x(0.78f);
         input2.receiveKeyboardEvents();
         input2.render();

@@ -182,7 +182,7 @@ void InputText::renderTextDraw() {
     /**
      * Convert y position -1 a 1 in window size position ex: -1 = 0
      */
-    this->textDraw.y((-(this->yPos + (this->yScale / 2.8)) + 1.0f) * (this->windowH / 2.f));
+    this->textDraw.y(((this->yPos - (this->yScale / 2.8f)) + 1.0f) * (this->windowH / 2.f));
     this->textDraw.text(this->inputText);
     this->textDraw.scale(1.0f);
     this->textDraw.render();
