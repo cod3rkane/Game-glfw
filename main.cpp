@@ -8,6 +8,7 @@
 #include "components/TextDraw.h"
 #include "components/InputText.h"
 #include "components/Square.h"
+#include "components/GUI/Menu.h"
 
 using namespace std;
 
@@ -103,6 +104,8 @@ int main() {
     GLfloat blueColor[] = {0.38f, 0.44f, 1.0f};
     GLfloat redColor[] = {0.72f, 0.0f, 0.02f};
 
+    Menu menuGUI(mode->width, mode->height);
+
     Square mySquare(mode->width, mode->height, purpleColor);
     mySquare.shader(&modelViewProjection);
 
@@ -174,13 +177,17 @@ int main() {
         input2.receiveKeyboardEvents();
         input2.render();
 
+        mySquare.x(0.4f);
         mySquare.render();
 
-        mySquare2.x(0.2f);
-//        mySquare2.z(-0.999f);
+        mySquare2.x(0.7f);
+        mySquare2.z(-0.999f);
         mySquare2.render();
 
+        menuGUI.render();
+
         glfwSwapBuffers(window);
+
         // clean inputs
         keyboardkey = 0;
         charCodePoint = 0;

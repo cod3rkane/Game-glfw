@@ -5,14 +5,15 @@
 #ifndef GAME_MENU_H
 #define GAME_MENU_H
 
-#include "../../util/Shader.h"
+#include "../Square.h"
+#include <SOIL/SOIL.h>
 
 class Menu {
-    Shader* menuShader;
-    GLfloat xPos = 0.0f, yPos = 0.0f, opacity = 1.0f;
-
+    Shader shader;
+    Square square = Square();
 public:
-    Menu(Shader* shader);
+    Menu(int windowWidth, int windowHeight);
+    void render();
     ~Menu();
 };
 
