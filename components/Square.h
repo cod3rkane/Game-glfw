@@ -105,11 +105,12 @@ public:
 
     /**
      * set the texture imge, used to draw textured object.
-     * @param image
+     * @param image SOIL_IMAGE loaded
      * @param width
      * @param height
+     * @param format one of GL_RGB or GL_RGBA
      */
-    void textureImage(unsigned char *image, int width, int height);
+    void textureImage(unsigned char *image, int width, int height, GLenum format);
 
     void scale(GLfloat scale);
 };

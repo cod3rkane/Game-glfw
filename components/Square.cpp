@@ -78,7 +78,7 @@ void Square::setupGL(GLfloat *color) {
     glBindVertexArray(0); // unbind VAO
 }
 
-void Square::textureImage(unsigned char *image, int width, int height) {
+void Square::textureImage(unsigned char *image, int width, int height, GLenum format) {
     try {
         // Load and create myTexture
         glGenTextures(1, &this->myTexture);
@@ -90,7 +90,7 @@ void Square::textureImage(unsigned char *image, int width, int height) {
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
+        glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, image);
         glGenerateMipmap(GL_TEXTURE_2D);
         // Free memory image
         SOIL_free_image_data(image);
