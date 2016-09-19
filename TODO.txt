@@ -1,3 +1,9 @@
 @todo Create Image Class
 @todo create Camera Class
 @todo create Component Cube Class, where is possible pass Texture
+
+
+// para brincar
+poderiamos fazer um joguinho "Minecraft Challenge" onde mostramos alguns objetos do minecraft e fazemos uma pergunta, ex:
+mostra 3 cubos(grass, dirt e stone) e pergunta qual deles é usado para tal coisa(Tipo qual deles eu consigo fazer stone lisa.) ou qual deles é o o dirt.
+só para testar nossa game engine.

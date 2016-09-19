@@ -109,10 +109,16 @@ int main() {
     Menu menuGUI(mode->width, mode->height);
 
     int imageW, imageH;
-    unsigned char *textureImage = SOIL_load_image("assets/images/dirt.jpg", &imageW, &imageH, 0, SOIL_LOAD_RGB);
-    Cube myFirstCube(mode->width, mode->height);
-    myFirstCube.shader(&modelViewProjectionTextured);
-    myFirstCube.textureImage(textureImage, imageH, imageH, GL_RGB);
+    unsigned char *dirtTexture = SOIL_load_image("assets/images/dirt.jpg", &imageW, &imageH, 0, SOIL_LOAD_RGB);
+    Cube dirtCube(mode->width, mode->height);
+    dirtCube.shader(&modelViewProjectionTextured);
+    dirtCube.textureImage(dirtTexture, imageH, imageH, GL_RGB);
+
+    unsigned char *stoneTexture = SOIL_load_image("assets/images/stone.jpg", &imageW, &imageH, 0, SOIL_LOAD_RGB);
+    Cube stoneCube(mode->width, mode->height);
+    stoneCube.shader(&modelViewProjectionTextured);
+    stoneCube.textureImage(stoneTexture, imageH, imageH, GL_RGB);
+    stoneCube.x(-0.5f);
 
     Square mySquare(mode->width, mode->height, purpleColor);
     mySquare.shader(&modelViewProjection);
@@ -186,16 +192,17 @@ int main() {
         input2.receiveKeyboardEvents();
         input2.render();
 
-        mySquare.x(0.4f);
-        mySquare.render();
+//        mySquare.x(0.4f);
+//        mySquare.render();
 
 //        mySquare2.x(0.7f);
 //        mySquare2.z(-0.999f);
 //        mySquare2.render();
 
-        menuGUI.render();
+//        menuGUI.render();
 
-        myFirstCube.render();
+        dirtCube.render();
+        stoneCube.render();
 
         glfwSwapBuffers(window);
 

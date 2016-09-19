@@ -210,6 +210,22 @@ void Cube::shader(Shader *shader) {
     this->ShaderPoint = shader;
 }
 
+void Cube::x(GLfloat x) {
+    this->xPos = x;
+}
+
+void Cube::y(GLfloat y) {
+    this->yPos = y;
+}
+
+void Cube::z(GLfloat z) {
+    this->zPos = z;
+}
+
+void Cube::scale(GLfloat scale) {
+    this->myScale = scale;
+}
+
 Cube::~Cube() {
     glDeleteVertexArrays(1, &this->VAO);
     glDeleteBuffers(3, this->VBO);

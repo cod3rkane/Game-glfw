@@ -23,6 +23,10 @@ public:
     void textureImage(unsigned char *image, int width, int height, GLenum format);
     void render();
     void shader(Shader* shader);
+    void x(GLfloat x);
+    void y(GLfloat y);
+    void z(GLfloat z);
+    void scale(GLfloat scale);
     ~Cube();
 };
 
