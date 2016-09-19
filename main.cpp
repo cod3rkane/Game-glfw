@@ -9,6 +9,7 @@
 #include "components/InputText.h"
 #include "components/Square.h"
 #include "components/GUI/Menu.h"
+#include "components/Cube.h"
 
 using namespace std;
 
@@ -65,7 +66,7 @@ int main() {
     monitor = glfwGetPrimaryMonitor();
     mode = glfwGetVideoMode(monitor);
 
-    window = glfwCreateWindow(mode->width, mode->height, "Project Melkor - Roch Studio", monitor, NULL);
+    window = glfwCreateWindow(mode->width, mode->height, "Project Melkor - Roch Studio", NULL, NULL);
     if (!window) {
         cout << "could not create Window" << endl;
         glfwTerminate();
@@ -99,12 +100,19 @@ int main() {
 
     Shader triangleShader("assets/Shaders/VertexShader.glsl", "assets/Shaders/FragmentShader.glsl");
     Shader modelViewProjection("assets/Shaders/ModelViewProjection.vert", "assets/Shaders/ModelViewProjection.frag");
+    Shader modelViewProjectionTextured("assets/Shaders/ModelViewProjectionTextured.vert", "assets/Shaders/ModelViewProjectionTextured.frag");
 
     GLfloat purpleColor[] = {0.09f, 0.95f, 0.14f};
     GLfloat blueColor[] = {0.38f, 0.44f, 1.0f};
     GLfloat redColor[] = {0.72f, 0.0f, 0.02f};
 
     Menu menuGUI(mode->width, mode->height);
+
+    int imageW, imageH;
+    unsigned char *textureImage = SOIL_load_image("assets/images/dirt.jpg", &imageW, &imageH, 0, SOIL_LOAD_RGB);
+    Cube myFirstCube(mode->width, mode->height);
+    myFirstCube.shader(&modelViewProjectionTextured);
+    myFirstCube.textureImage(textureImage, imageH, imageH, GL_RGB);
 
     Square mySquare(mode->width, mode->height, purpleColor);
     mySquare.shader(&modelViewProjection);
@@ -144,7 +152,6 @@ int main() {
     player.shader(&triangleShader);
     player.z(0.0f);
     // Player Texture
-    int imageW, imageH;
     unsigned char *image = SOIL_load_image("assets/images/container.jpg", &imageW, &imageH, 0, SOIL_LOAD_RGB);
     player.textureImage(image, imageW, imageH);
 
@@ -182,11 +189,13 @@ int main() {
         mySquare.x(0.4f);
         mySquare.render();
 
-        mySquare2.x(0.7f);
-        mySquare2.z(-0.999f);
-        mySquare2.render();
+//        mySquare2.x(0.7f);
+//        mySquare2.z(-0.999f);
+//        mySquare2.render();
 
         menuGUI.render();
+
+        myFirstCube.render();
 
         glfwSwapBuffers(window);
 

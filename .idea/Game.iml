@@ -12,9 +12,11 @@
       <sourceFolder url="file://$MODULE_DIR$/components/Square.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/components/Rectangle.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/components/InputText.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/components/TextDraw.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/components/Cube.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/components/TextDraw.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/components/Cube.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/components/Button.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/components/TextDraw.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/components/Button.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/components/InputText.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/components/GUI/Menu.h" isTestSource="false" />
