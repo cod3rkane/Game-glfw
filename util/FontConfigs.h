@@ -10,7 +10,7 @@
 #include "Character.h"
 #include <map>
 #include "Shader.h"
-#include <ext.hpp>
+#include <glm/ext.hpp>
 
 using namespace std;
 

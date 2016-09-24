@@ -66,7 +66,7 @@ int main() {
     monitor = glfwGetPrimaryMonitor();
     mode = glfwGetVideoMode(monitor);
 
-    window = glfwCreateWindow(mode->width, mode->height, "Project Melkor - Roch Studio", NULL, NULL);
+    window = glfwCreateWindow(mode->width, mode->height, "Project Melkor - Roch Studio", monitor, NULL);
     if (!window) {
         cout << "could not create Window" << endl;
         glfwTerminate();
@@ -100,7 +100,10 @@ int main() {
 
     Shader triangleShader("assets/Shaders/VertexShader.glsl", "assets/Shaders/FragmentShader.glsl");
     Shader modelViewProjection("assets/Shaders/ModelViewProjection.vert", "assets/Shaders/ModelViewProjection.frag");
-    Shader modelViewProjectionTextured("assets/Shaders/ModelViewProjectionTextured.vert", "assets/Shaders/ModelViewProjectionTextured.frag");
+    Shader modelViewProjectionTextured(
+            "assets/Shaders/ModelViewProjectionTextured.vert",
+            "assets/Shaders/ModelViewProjectionTextured.frag"
+    );
 
     GLfloat purpleColor[] = {0.09f, 0.95f, 0.14f};
     GLfloat blueColor[] = {0.38f, 0.44f, 1.0f};
@@ -113,12 +116,19 @@ int main() {
     Cube dirtCube(mode->width, mode->height);
     dirtCube.shader(&modelViewProjectionTextured);
     dirtCube.textureImage(dirtTexture, imageH, imageH, GL_RGB);
+    dirtCube.x(0.3f);
 
     unsigned char *stoneTexture = SOIL_load_image("assets/images/stone.jpg", &imageW, &imageH, 0, SOIL_LOAD_RGB);
     Cube stoneCube(mode->width, mode->height);
     stoneCube.shader(&modelViewProjectionTextured);
     stoneCube.textureImage(stoneTexture, imageH, imageH, GL_RGB);
-    stoneCube.x(-0.5f);
+//    stoneCube.x(-0.3f);
+
+    unsigned char *sandTexture = SOIL_load_image("assets/images/sand.jpg", &imageW, &imageH, 0, SOIL_LOAD_RGB);
+    Cube sandCube(mode->width, mode->height);
+    sandCube.shader(&modelViewProjectionTextured);
+    sandCube.textureImage(sandTexture, imageH, imageH, GL_RGB);
+    sandCube.x(-0.3f);
 
     Square mySquare(mode->width, mode->height, purpleColor);
     mySquare.shader(&modelViewProjection);
@@ -203,6 +213,7 @@ int main() {
 
         dirtCube.render();
         stoneCube.render();
+        sandCube.render();
 
         glfwSwapBuffers(window);
 

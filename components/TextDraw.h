@@ -8,7 +8,7 @@
 
 #include <GL/glew.h>
 #include <glm/vec3.hpp>
-#include <ext.hpp>
+#include <glm/ext.hpp>
 #include "../util/Shader.h"
 #include "../util/Character.h"
 #include <map>
