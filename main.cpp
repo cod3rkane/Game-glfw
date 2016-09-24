@@ -88,11 +88,6 @@ int main() {
         return -1;
     }
 
-    glEnable(GL_DEPTH);
-    glEnable(GL_DEPTH_TEST);
-    glDepthFunc(GL_LESS);
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glMatrixMode(GL_PROJECTION);
     glViewport(0, 0, mode->width, mode->height);
     glMatrixMode(GL_MODELVIEW);

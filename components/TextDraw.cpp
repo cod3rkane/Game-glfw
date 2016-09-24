@@ -106,6 +106,12 @@ int TextDraw::windowHeight() {
 }
 
 void TextDraw::render() {
+    glEnable(GL_DEPTH);
+    glEnable(GL_DEPTH_TEST);
+    glDepthFunc(GL_LESS);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
     // Activate corresponding render state
     this->myShader->use();
     try {
@@ -151,6 +157,10 @@ void TextDraw::render() {
 
     glBindVertexArray(0);
     glBindTexture(GL_TEXTURE_2D, 0);
+
+    glDisable(GL_DEPTH);
+    glDisable(GL_DEPTH_TEST);
+    glDisable(GL_BLEND);
 }
 
 TextDraw::~TextDraw() {
