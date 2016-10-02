@@ -113,24 +113,35 @@ int main() {
     projectionMatrix.setAspectRatio((GLfloat)mode->width / mode->height);
 
     int imageW, imageH;
-    unsigned char *dirtTexture = SOIL_load_image("assets/images/dirt.jpg", &imageW, &imageH, 0, SOIL_LOAD_RGB);
-    Entity entity(0, vec3(0, 0, 0), 0, 0, 0, 1);
-    Cube dirtCube(mode->width, mode->height);
-    dirtCube.setEntity(entity);
-    dirtCube.setCamera(&camera);
-    dirtCube.setProjectionMatrix(projectionMatrix);
-    dirtCube.shader(&modelViewProjectionTextured);
-    dirtCube.textureImage(dirtTexture, imageH, imageH, GL_RGB);
+    unsigned char *dirtTexture;
 
-    unsigned char *stoneTexture = SOIL_load_image("assets/images/stone.jpg", &imageW, &imageH, 0, SOIL_LOAD_RGB);
-    Cube stoneCube(mode->width, mode->height);
-    stoneCube.shader(&modelViewProjectionTextured);
-    stoneCube.textureImage(stoneTexture, imageH, imageH, GL_RGB);
+    Entity *entity[50];
+    Cube *cubes[50];
 
-    unsigned char *sandTexture = SOIL_load_image("assets/images/sand.jpg", &imageW, &imageH, 0, SOIL_LOAD_RGB);
-    Cube sandCube(mode->width, mode->height);
-    sandCube.shader(&modelViewProjectionTextured);
-    sandCube.textureImage(sandTexture, imageH, imageH, GL_RGB);
+    for (int i = 0; i < 50; i++) {
+//        int num = (i >= 10 ? (i / 10) : 0);
+//        entity[i] = new Entity(0, vec3((i * 1), -2, (num * -1)), 0, 0, 0, 1);
+//
+        if (i < 10)
+            entity[i] = new Entity(0, vec3(i * 1, -2, 0), 0, 0, 0, 1);
+        else if (i >= 10 && i < 20)
+            entity[i] = new Entity(0, vec3((i - 10) * 1, -2, -1), 0, 0, 0, 1);
+        else if (i >= 20 && i < 30)
+            entity[i] = new Entity(0, vec3((i - 20) * 1, -2, -2), 0, 0, 0, 1);
+        else if (i >= 30 && i < 40)
+            entity[i] = new Entity(0, vec3((i - 30) * 1, -2, -3), 0, 0, 0, 1);
+        else if (i >= 40 && i < 50)
+            entity[i] = new Entity(0, vec3((i - 40) * 1, -2, -4), 0, 0, 0, 1);
+
+        cubes[i] = new Cube(mode->width, mode->height);
+
+        cubes[i]->setEntity(*entity[i]);
+        cubes[i]->setCamera(&camera);
+        cubes[i]->setProjectionMatrix(projectionMatrix);
+        cubes[i]->shader(&modelViewProjectionTextured);
+        dirtTexture = SOIL_load_image((i >= 30 ? "assets/images/stone.jpg" : "assets/images/dirt.jpg"), &imageW, &imageH, 0, SOIL_LOAD_RGB);
+        cubes[i]->textureImage(dirtTexture, imageW, imageH, GL_RGB);
+    }
 
     // ### Font Configs
     Shader fontShader("assets/Shaders/FontVertexShader.glsl", "assets/Shaders/FontFragmentShader.glsl");
@@ -159,13 +170,12 @@ int main() {
 
         // Game Logic here
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+        glClearColor(0.400f, 0.750f, 1.00f, 1.0f);
 
         // Set frame time
         GLfloat currentFrame = glfwGetTime();
         deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
-
         Do_Movement();
 
         // Render Text
@@ -187,9 +197,9 @@ int main() {
         input2.receiveKeyboardEvents();
         input2.render();
 
-        dirtCube.render();
-//        stoneCube.render();
-//        sandCube.render();
+        for (int i = 0; i < 50; i++) {
+            cubes[i]->render();
+        }
 
         glfwSwapBuffers(window);
 
