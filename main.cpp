@@ -10,6 +10,8 @@
 #include "components/Square.h"
 #include "components/GUI/Menu.h"
 #include "components/Cube.h"
+#include "util/Camera.h"
+#include "components/Player.h"
 
 using namespace std;
 
@@ -20,6 +22,17 @@ int WINDOW_H = 720;
 GLFWwindow *window;
 GLFWmonitor* monitor;
 const GLFWvidmode* mode;
+
+// Camera
+void Do_movement();
+
+Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
+bool keys[1024];
+GLfloat lastX = 400, lastY = 300;
+bool firstMouse = true;
+
+GLfloat deltaTime = 0.0f;
+GLfloat lastFrame = 0.0f;
 
 // @todo remove these variables when GameLoop and GameWindow done.
 int keyboardkey, mouseButton, mouseAction;
@@ -40,10 +53,13 @@ static void keyCallBack(GLFWwindow *window, int key, int scancode, int action, i
             // Set full screen window
             glfwSetWindowMonitor(window, monitor, 0, 0, mode->width, mode->height, mode->refreshRate);
         }
+
+        if (key >= 0 && key < 1024)
+            keys[key] = true;
     } else if (action == GLFW_RELEASE) {
         keyboardkey = 0;
+        keys[key] = false;
     }
-
 }
 
 static void mouseButtonCallback(GLFWwindow* window, int button, int action, int mods) {
@@ -166,13 +182,24 @@ int main() {
     unsigned char *image = SOIL_load_image("assets/images/container.jpg", &imageW, &imageH, 0, SOIL_LOAD_RGB);
     player.textureImage(image, imageW, imageH);
 
+    Player pl(mode->width, mode->height);
+    pl.setShaderPoint(&modelViewProjection);
+    pl.setCamera(camera);
+
     while (!glfwWindowShouldClose(window)) {
         // Check and call events
         glfwPollEvents();
 
+        GLfloat currentFrame = glfwGetTime();
+        deltaTime = currentFrame - lastFrame;
+        lastFrame = currentFrame;
+
+        Do_movement();
+
         // Game Logic here
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+
 
         // Render Objects
 //        Enemy.render();
@@ -210,6 +237,9 @@ int main() {
         stoneCube.render();
         sandCube.render();
 
+        pl.setXPos(-0.6f);
+        pl.render();
+
         glfwSwapBuffers(window);
 
         // clean inputs
@@ -220,4 +250,15 @@ int main() {
     glfwDestroyWindow(window);
     glfwTerminate();
     return 0;
+}
+
+void Do_movement() {
+    if (keys[GLFW_KEY_W])
+        camera.ProcessKeyboard(FORWARD, deltaTime);
+    if (keys[GLFW_KEY_S])
+        camera.ProcessKeyboard(BACKWARD, deltaTime);
+    if (keys[GLFW_KEY_A])
+        camera.ProcessKeyboard(LEFT, deltaTime);
+    if (keys[GLFW_KEY_D])
+        camera.ProcessKeyboard(RIGHT, deltaTime);
 }
