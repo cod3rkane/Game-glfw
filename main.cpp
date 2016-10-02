@@ -7,6 +7,7 @@
 #include "components/InputText.h"
 #include "components/Cube.h"
 #include "util/ProjectionMatrix.h"
+#include "util/Camera.h"
 
 using namespace std;
 
@@ -21,6 +22,17 @@ const GLFWvidmode* mode;
 // @todo remove these variables when GameLoop and GameWindow done.
 int keyboardkey, mouseButton, mouseAction;
 unsigned int charCodePoint;
+
+// Camera Configs
+void Do_Movement();
+
+Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
+bool keys[1024];
+GLfloat lastX = 400, lastY = 300;
+bool firstMouse = true;
+
+GLfloat deltaTime = 0.0f;
+GLfloat lastFrame = 0.0f;
 
 static void error_callback(int error, const char *desc) {
     cout << "Error: " << desc << endl;
@@ -37,8 +49,13 @@ static void keyCallBack(GLFWwindow *window, int key, int scancode, int action, i
             // Set full screen window
             glfwSetWindowMonitor(window, monitor, 0, 0, mode->width, mode->height, mode->refreshRate);
         }
+
+        if (key >= 0 && key < 1024) {
+            keys[key] = true;
+        }
     } else if (action == GLFW_RELEASE) {
         keyboardkey = 0;
+        keys[key] = false;
     }
 }
 
@@ -97,25 +114,23 @@ int main() {
 
     int imageW, imageH;
     unsigned char *dirtTexture = SOIL_load_image("assets/images/dirt.jpg", &imageW, &imageH, 0, SOIL_LOAD_RGB);
-    Entity entity(0, vec3(0, 0, -5), 0, 0, 0, 1);
+    Entity entity(0, vec3(0, 0, 0), 0, 0, 0, 1);
     Cube dirtCube(mode->width, mode->height);
     dirtCube.setEntity(entity);
+    dirtCube.setCamera(&camera);
     dirtCube.setProjectionMatrix(projectionMatrix);
     dirtCube.shader(&modelViewProjectionTextured);
     dirtCube.textureImage(dirtTexture, imageH, imageH, GL_RGB);
-    dirtCube.x(0.3f);
 
     unsigned char *stoneTexture = SOIL_load_image("assets/images/stone.jpg", &imageW, &imageH, 0, SOIL_LOAD_RGB);
     Cube stoneCube(mode->width, mode->height);
     stoneCube.shader(&modelViewProjectionTextured);
     stoneCube.textureImage(stoneTexture, imageH, imageH, GL_RGB);
-//    stoneCube.x(-0.3f);
 
     unsigned char *sandTexture = SOIL_load_image("assets/images/sand.jpg", &imageW, &imageH, 0, SOIL_LOAD_RGB);
     Cube sandCube(mode->width, mode->height);
     sandCube.shader(&modelViewProjectionTextured);
     sandCube.textureImage(sandTexture, imageH, imageH, GL_RGB);
-    sandCube.x(-0.3f);
 
     // ### Font Configs
     Shader fontShader("assets/Shaders/FontVertexShader.glsl", "assets/Shaders/FontFragmentShader.glsl");
@@ -146,6 +161,12 @@ int main() {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 
+        // Set frame time
+        GLfloat currentFrame = glfwGetTime();
+        deltaTime = currentFrame - lastFrame;
+        lastFrame = currentFrame;
+
+        Do_Movement();
 
         // Render Text
         playerText.x(1.0f);
@@ -180,4 +201,18 @@ int main() {
     glfwDestroyWindow(window);
     glfwTerminate();
     return 0;
+}
+
+// Moves/alters the camera positions based on user input
+void Do_Movement()
+{
+    // Camera controls
+    if(keys[GLFW_KEY_W])
+        camera.ProcessKeyboard(FORWARD, deltaTime);
+    if(keys[GLFW_KEY_S])
+        camera.ProcessKeyboard(BACKWARD, deltaTime);
+    if(keys[GLFW_KEY_A])
+        camera.ProcessKeyboard(LEFT, deltaTime);
+    if(keys[GLFW_KEY_D])
+        camera.ProcessKeyboard(RIGHT, deltaTime);
 }

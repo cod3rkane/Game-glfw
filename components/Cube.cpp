@@ -184,8 +184,6 @@ void Cube::render() {
         glUniform1i(glGetUniformLocation(this->ShaderPoint->program, "ourTexture"), 0);
     }
 
-    this->entity.increaseRotation(1, 0, 1);
-//    this->entity.increasePosition(0, 0, -0.02);
     mat4 transformationMatrix = this->maths.createTransformationMatrix(
             this->entity.getPosition(),
             this->entity.getRotX(), this->entity.getRotY(),
@@ -199,8 +197,7 @@ void Cube::render() {
             this->projectionMatrix.getFarPlane()
     );
 
-    glm::mat4 view;
-    view = glm::translate(view, glm::vec3(this->xPos, this->yPos, this->zPos));
+    mat4 view = this->camera->GetViewMatrix();
 
     // Get their uniform location
     GLint transformLoc = glGetUniformLocation(this->ShaderPoint->program, "transform");
@@ -220,22 +217,6 @@ void Cube::render() {
 
 void Cube::shader(Shader *shader) {
     this->ShaderPoint = shader;
-}
-
-void Cube::x(GLfloat x) {
-    this->xPos = x;
-}
-
-void Cube::y(GLfloat y) {
-    this->yPos = y;
-}
-
-void Cube::z(GLfloat z) {
-    this->zPos = z;
-}
-
-void Cube::scale(GLfloat scale) {
-    this->myScale = scale;
 }
 
 Cube::~Cube() {
@@ -258,4 +239,12 @@ const ProjectionMatrix &Cube::getProjectionMatrix() const {
 
 void Cube::setProjectionMatrix(const ProjectionMatrix &projectionMatrix) {
     Cube::projectionMatrix = projectionMatrix;
+}
+
+Camera *Cube::getCamera() const {
+    return camera;
+}
+
+void Cube::setCamera(Camera *camera) {
+    Cube::camera = camera;
 }

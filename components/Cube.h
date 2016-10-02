@@ -13,13 +13,14 @@
 #include <SOIL/SOIL.h>
 #include "../util/Maths.h"
 #include "../util/ProjectionMatrix.h"
+#include "../util/Camera.h"
 
 class Cube {
     Shader* ShaderPoint;
     Entity entity;
     ProjectionMatrix projectionMatrix;
+    Camera* camera;
     GLuint VAO, VBO[3], EBO, myTexture = 0;
-    GLfloat xPos = 0.0f, yPos = 0.0f, zPos = -1.0f, myScale = 0.17f;
     int windowWidth, windowHeight;
     Maths maths;
 public:
@@ -29,10 +30,6 @@ public:
     void textureImage(unsigned char *image, int width, int height, GLenum format);
     void render();
     void shader(Shader* shader);
-    void x(GLfloat x);
-    void y(GLfloat y);
-    void z(GLfloat z);
-    void scale(GLfloat scale);
 
     const Entity &getEntity() const;
 
@@ -41,6 +38,10 @@ public:
     const ProjectionMatrix &getProjectionMatrix() const;
 
     void setProjectionMatrix(const ProjectionMatrix &projectionMatrix);
+
+    Camera *getCamera() const;
+
+    void setCamera(Camera *camera);
 
     ~Cube();
 };
