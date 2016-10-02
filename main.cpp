@@ -6,6 +6,7 @@
 #include "components/TextDraw.h"
 #include "components/InputText.h"
 #include "components/Cube.h"
+#include "util/ProjectionMatrix.h"
 
 using namespace std;
 
@@ -91,9 +92,15 @@ int main() {
             "assets/Shaders/ModelViewProjectionTextured.frag"
     );
 
+    ProjectionMatrix projectionMatrix;
+    projectionMatrix.setAspectRatio((GLfloat)mode->width / mode->height);
+
     int imageW, imageH;
     unsigned char *dirtTexture = SOIL_load_image("assets/images/dirt.jpg", &imageW, &imageH, 0, SOIL_LOAD_RGB);
+    Entity entity(0, vec3(0, 0, -5), 0, 0, 0, 1);
     Cube dirtCube(mode->width, mode->height);
+    dirtCube.setEntity(entity);
+    dirtCube.setProjectionMatrix(projectionMatrix);
     dirtCube.shader(&modelViewProjectionTextured);
     dirtCube.textureImage(dirtTexture, imageH, imageH, GL_RGB);
     dirtCube.x(0.3f);
@@ -160,8 +167,8 @@ int main() {
         input2.render();
 
         dirtCube.render();
-        stoneCube.render();
-        sandCube.render();
+//        stoneCube.render();
+//        sandCube.render();
 
         glfwSwapBuffers(window);
 

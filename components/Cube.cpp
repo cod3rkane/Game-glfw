@@ -184,21 +184,33 @@ void Cube::render() {
         glUniform1i(glGetUniformLocation(this->ShaderPoint->program, "ourTexture"), 0);
     }
 
-    glm::mat4 model, view, projection;
-    model = glm::rotate(model, (GLfloat) glfwGetTime(), glm::vec3(0.5f, 1.0f, 0.0f));
-    model = glm::scale(model, glm::vec3(this->myScale, this->myScale, this->myScale));
+    this->entity.increaseRotation(1, 0, 1);
+//    this->entity.increasePosition(0, 0, -0.02);
+    mat4 transformationMatrix = this->maths.createTransformationMatrix(
+            this->entity.getPosition(),
+            this->entity.getRotX(), this->entity.getRotY(),
+            this->entity.getRotZ(), this->entity.getScale()
+    );
+
+    mat4 projectionMatrix = glm::perspective(
+            this->projectionMatrix.getFov(),
+            this->projectionMatrix.getAspectRatio(),
+            this->projectionMatrix.getNearPlane(),
+            this->projectionMatrix.getFarPlane()
+    );
+
+    glm::mat4 view;
     view = glm::translate(view, glm::vec3(this->xPos, this->yPos, this->zPos));
-    projection = glm::perspective(45.0f, (GLfloat) this->windowWidth / this->windowHeight, 0.1f, 100.0f);
 
     // Get their uniform location
-    GLint modelLoc = glGetUniformLocation(this->ShaderPoint->program, "model");
+    GLint transformLoc = glGetUniformLocation(this->ShaderPoint->program, "transform");
     GLint viewLoc = glGetUniformLocation(this->ShaderPoint->program, "view");
     GLint projectLoc = glGetUniformLocation(this->ShaderPoint->program, "projection");
 
     // pass them to the shaders
-    glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+    glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transformationMatrix));
     glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
-    glUniformMatrix4fv(projectLoc, 1, GL_FALSE, glm::value_ptr(projection));
+    glUniformMatrix4fv(projectLoc, 1, GL_FALSE, glm::value_ptr(projectionMatrix));
 
     glBindVertexArray(this->VAO);
 //    glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
@@ -230,4 +242,20 @@ Cube::~Cube() {
     glDeleteVertexArrays(1, &this->VAO);
     glDeleteBuffers(3, this->VBO);
     glDeleteBuffers(1, &this->EBO);
+}
+
+const Entity &Cube::getEntity() const {
+    return entity;
+}
+
+void Cube::setEntity(const Entity &entity) {
+    Cube::entity = entity;
+}
+
+const ProjectionMatrix &Cube::getProjectionMatrix() const {
+    return projectionMatrix;
+}
+
+void Cube::setProjectionMatrix(const ProjectionMatrix &projectionMatrix) {
+    Cube::projectionMatrix = projectionMatrix;
 }

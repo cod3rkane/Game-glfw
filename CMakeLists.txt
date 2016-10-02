@@ -24,7 +24,7 @@ include_directories(${GLEW_INCLUDE_DIRS})
 pkg_search_module(GLU REQUIRED glu)
 include_directories(${GLU_INCLUDE_DIRS})
 
-set(SOURCE_FILES main.cpp components/Button.cpp components/Button.h util/Shader.cpp util/Shader.h components/Rectangle.cpp components/Rectangle.h util/FontConfigs.cpp util/FontConfigs.h util/Character.h components/TextDraw.cpp components/TextDraw.h components/InputText.cpp components/InputText.h components/GUI/Menu.cpp components/GUI/Menu.h components/Square.cpp components/Square.h components/Cube.cpp components/Cube.h util/Camera.cpp util/Camera.h components/Player.cpp components/Player.h)
+set(SOURCE_FILES main.cpp components/Button.cpp components/Button.h util/Shader.cpp util/Shader.h components/Rectangle.cpp components/Rectangle.h util/FontConfigs.cpp util/FontConfigs.h util/Character.h components/TextDraw.cpp components/TextDraw.h components/InputText.cpp components/InputText.h components/GUI/Menu.cpp components/GUI/Menu.h components/Square.cpp components/Square.h components/Cube.cpp components/Cube.h util/Camera.cpp util/Camera.h components/Player.cpp components/Player.h entities/Entity.cpp entities/Entity.h util/Maths.cpp util/Maths.h util/ProjectionMatrix.cpp util/ProjectionMatrix.h)
 add_executable(Game ${SOURCE_FILES})
 
 include_directories(${GLEW_INCLUDE_DIRS} ${OPENGL_INCLUDE_DIR})
