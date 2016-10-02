@@ -1,17 +1,11 @@
-#include <iostream>
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include "util/Shader.h"
-#include "components/Rectangle.h"
 #include <map>
 #include "util/FontConfigs.h"
 #include "components/TextDraw.h"
 #include "components/InputText.h"
-#include "components/Square.h"
-#include "components/GUI/Menu.h"
 #include "components/Cube.h"
-#include "util/Camera.h"
-#include "components/Player.h"
 
 using namespace std;
 
@@ -22,17 +16,6 @@ int WINDOW_H = 720;
 GLFWwindow *window;
 GLFWmonitor* monitor;
 const GLFWvidmode* mode;
-
-// Camera
-void Do_movement();
-
-Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
-bool keys[1024];
-GLfloat lastX = 400, lastY = 300;
-bool firstMouse = true;
-
-GLfloat deltaTime = 0.0f;
-GLfloat lastFrame = 0.0f;
 
 // @todo remove these variables when GameLoop and GameWindow done.
 int keyboardkey, mouseButton, mouseAction;
@@ -53,12 +36,8 @@ static void keyCallBack(GLFWwindow *window, int key, int scancode, int action, i
             // Set full screen window
             glfwSetWindowMonitor(window, monitor, 0, 0, mode->width, mode->height, mode->refreshRate);
         }
-
-        if (key >= 0 && key < 1024)
-            keys[key] = true;
     } else if (action == GLFW_RELEASE) {
         keyboardkey = 0;
-        keys[key] = false;
     }
 }
 
@@ -69,7 +48,6 @@ static void mouseButtonCallback(GLFWwindow* window, int button, int action, int 
 
 void character_callback(GLFWwindow* window, unsigned int codepoint, int mods) {
     charCodePoint = codepoint;
-//    cout << static_cast<unsigned char>(static_cast<unsigned int>(codepoint)) << endl;
 }
 
 int main() {
@@ -108,19 +86,10 @@ int main() {
     glViewport(0, 0, mode->width, mode->height);
     glMatrixMode(GL_MODELVIEW);
 
-
-    Shader triangleShader("assets/Shaders/VertexShader.glsl", "assets/Shaders/FragmentShader.glsl");
-    Shader modelViewProjection("assets/Shaders/ModelViewProjection.vert", "assets/Shaders/ModelViewProjection.frag");
     Shader modelViewProjectionTextured(
             "assets/Shaders/ModelViewProjectionTextured.vert",
             "assets/Shaders/ModelViewProjectionTextured.frag"
     );
-
-    GLfloat purpleColor[] = {0.09f, 0.95f, 0.14f};
-    GLfloat blueColor[] = {0.38f, 0.44f, 1.0f};
-    GLfloat redColor[] = {0.72f, 0.0f, 0.02f};
-
-    Menu menuGUI(mode->width, mode->height);
 
     int imageW, imageH;
     unsigned char *dirtTexture = SOIL_load_image("assets/images/dirt.jpg", &imageW, &imageH, 0, SOIL_LOAD_RGB);
@@ -141,19 +110,11 @@ int main() {
     sandCube.textureImage(sandTexture, imageH, imageH, GL_RGB);
     sandCube.x(-0.3f);
 
-    Square mySquare(mode->width, mode->height, purpleColor);
-    mySquare.shader(&modelViewProjection);
-
-    Square mySquare2(mode->width, mode->height, redColor);
-    mySquare2.shader(&modelViewProjection);
-
     // ### Font Configs
     Shader fontShader("assets/Shaders/FontVertexShader.glsl", "assets/Shaders/FontFragmentShader.glsl");
     FontConfigs fontConfigs(18);
     // ### End Font Configs
-
     InputText inputText(window, mode->width, mode->height);
-//    inputText.maxCharacter(45);
     inputText.scaleX(0.2);
     inputText.scaleY(0.03);
     inputText.fontShader(&fontShader);
@@ -170,40 +131,14 @@ int main() {
     playerText.characters(fontConfigs.Characters);
     playerText.color(glm::vec3(0.5, 0.8f, 0.2f));
 
-//    Rectangle Enemy = Rectangle(redColor);
-//    Enemy.shader(&triangleShader);
-//    Enemy.x(0.2f);
-//    Enemy.z(0.2f);
-
-    Rectangle player = Rectangle(blueColor);
-    player.shader(&triangleShader);
-    player.z(0.0f);
-    // Player Texture
-    unsigned char *image = SOIL_load_image("assets/images/container.jpg", &imageW, &imageH, 0, SOIL_LOAD_RGB);
-    player.textureImage(image, imageW, imageH);
-
-    Player pl(mode->width, mode->height);
-    pl.setShaderPoint(&modelViewProjection);
-    pl.setCamera(camera);
-
     while (!glfwWindowShouldClose(window)) {
         // Check and call events
         glfwPollEvents();
-
-        GLfloat currentFrame = glfwGetTime();
-        deltaTime = currentFrame - lastFrame;
-        lastFrame = currentFrame;
-
-        Do_movement();
 
         // Game Logic here
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 
-
-        // Render Objects
-//        Enemy.render();
-//        player.render();
 
         // Render Text
         playerText.x(1.0f);
@@ -224,21 +159,9 @@ int main() {
         input2.receiveKeyboardEvents();
         input2.render();
 
-//        mySquare.x(0.4f);
-//        mySquare.render();
-
-//        mySquare2.x(0.7f);
-//        mySquare2.z(-0.999f);
-//        mySquare2.render();
-
-//        menuGUI.render();
-
         dirtCube.render();
         stoneCube.render();
         sandCube.render();
-
-        pl.setXPos(-0.6f);
-        pl.render();
 
         glfwSwapBuffers(window);
 
@@ -250,15 +173,4 @@ int main() {
     glfwDestroyWindow(window);
     glfwTerminate();
     return 0;
-}
-
-void Do_movement() {
-    if (keys[GLFW_KEY_W])
-        camera.ProcessKeyboard(FORWARD, deltaTime);
-    if (keys[GLFW_KEY_S])
-        camera.ProcessKeyboard(BACKWARD, deltaTime);
-    if (keys[GLFW_KEY_A])
-        camera.ProcessKeyboard(LEFT, deltaTime);
-    if (keys[GLFW_KEY_D])
-        camera.ProcessKeyboard(RIGHT, deltaTime);
 }
