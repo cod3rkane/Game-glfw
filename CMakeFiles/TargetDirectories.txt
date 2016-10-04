@@ -1,3 +1,0 @@
-/home/cod3r/Projects/Game-glfw/CMakeFiles/rebuild_cache.dir
-/home/cod3r/Projects/Game-glfw/CMakeFiles/edit_cache.dir
-/home/cod3r/Projects/Game-glfw/CMakeFiles/Game.dir
