@@ -13,13 +13,14 @@
 #include <SOIL/SOIL.h>
 #include "../util/Maths.h"
 #include "../util/ProjectionMatrix.h"
-#include "../util/Camera.h"
+
+using namespace glm;
 
 class Cube {
     Shader* ShaderPoint;
     Entity entity;
     ProjectionMatrix projectionMatrix;
-    Camera* camera;
+    mat4 viewMatrix;
     GLuint VAO, VBO[3], EBO, myTexture = 0;
     int windowWidth, windowHeight;
     Maths maths;
@@ -39,9 +40,9 @@ public:
 
     void setProjectionMatrix(const ProjectionMatrix &projectionMatrix);
 
-    Camera *getCamera() const;
+    const mat4 &getViewMatrix() const;
 
-    void setCamera(Camera *camera);
+    void setViewMatrix(const mat4 &viewMatrix);
 
     ~Cube();
 };

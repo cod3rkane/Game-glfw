@@ -197,8 +197,6 @@ void Cube::render() {
             this->projectionMatrix.getFarPlane()
     );
 
-    mat4 view = this->camera->GetViewMatrix();
-
     // Get their uniform location
     GLint transformLoc = glGetUniformLocation(this->ShaderPoint->program, "transform");
     GLint viewLoc = glGetUniformLocation(this->ShaderPoint->program, "view");
@@ -206,7 +204,7 @@ void Cube::render() {
 
     // pass them to the shaders
     glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transformationMatrix));
-    glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
+    glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(this->viewMatrix));
     glUniformMatrix4fv(projectLoc, 1, GL_FALSE, glm::value_ptr(projectionMatrix));
 
     glBindVertexArray(this->VAO);
@@ -241,10 +239,10 @@ void Cube::setProjectionMatrix(const ProjectionMatrix &projectionMatrix) {
     Cube::projectionMatrix = projectionMatrix;
 }
 
-Camera *Cube::getCamera() const {
-    return camera;
+const mat4 &Cube::getViewMatrix() const {
+    return viewMatrix;
 }
 
-void Cube::setCamera(Camera *camera) {
-    Cube::camera = camera;
+void Cube::setViewMatrix(const mat4 &viewMatrix) {
+    Cube::viewMatrix = viewMatrix;
 }

@@ -136,8 +136,6 @@ int main() {
         cubes[i] = new Cube(mode->width, mode->height);
 
         cubes[i]->setEntity(*entity[i]);
-        cubes[i]->setCamera(&camera);
-        cubes[i]->setProjectionMatrix(projectionMatrix);
         cubes[i]->shader(&modelViewProjectionTextured);
         dirtTexture = SOIL_load_image((i >= 30 ? "assets/images/stone.jpg" : "assets/images/dirt.jpg"), &imageW, &imageH, 0, SOIL_LOAD_RGB);
         cubes[i]->textureImage(dirtTexture, imageW, imageH, GL_RGB);
@@ -198,6 +196,8 @@ int main() {
         input2.render();
 
         for (int i = 0; i < 50; i++) {
+            cubes[i]->setViewMatrix(camera.GetViewMatrix());
+            cubes[i]->setProjectionMatrix(projectionMatrix);
             cubes[i]->render();
         }
 
