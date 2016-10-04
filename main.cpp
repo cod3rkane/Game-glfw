@@ -8,6 +8,7 @@
 #include "components/Cube.h"
 #include "util/ProjectionMatrix.h"
 #include "util/Camera.h"
+#include "util/io/Mouse.h"
 
 using namespace std;
 
@@ -68,6 +69,25 @@ void character_callback(GLFWwindow* window, unsigned int codepoint, int mods) {
     charCodePoint = codepoint;
 }
 
+void mouse_callback(GLFWwindow* window, double xpos, double ypos) {
+    Mouse::setXpos(xpos);
+    Mouse::setYpos(ypos);
+
+    if (firstMouse) {
+        lastX = xpos;
+        lastY = ypos;
+        firstMouse = false;
+    }
+
+    GLfloat xoffset = xpos - lastX;
+    GLfloat yoffset = lastY - ypos; // Reversed since y-coordinates go from bottom to left
+
+    lastX = xpos;
+    lastY = ypos;
+
+    camera.ProcessMouseMovement(xoffset, yoffset);
+}
+
 int main() {
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
@@ -92,6 +112,7 @@ int main() {
     glfwSetKeyCallback(window, keyCallBack);
     glfwSetMouseButtonCallback(window, mouseButtonCallback);
     glfwSetCharModsCallback(window, character_callback);
+    glfwSetCursorPosCallback(window, mouse_callback);
     glfwMakeContextCurrent(window);
 
     glewExperimental = GL_TRUE;
@@ -145,18 +166,18 @@ int main() {
     Shader fontShader("assets/Shaders/FontVertexShader.glsl", "assets/Shaders/FontFragmentShader.glsl");
     FontConfigs fontConfigs(18);
     // ### End Font Configs
-    InputText inputText(window, mode->width, mode->height);
-    inputText.scaleX(0.2);
-    inputText.scaleY(0.03);
-    inputText.fontShader(&fontShader);
-    inputText.characters(fontConfigs.Characters);
-    inputText.setUpPosition();
-
-    InputText input2(window, mode->width, mode->height);
-    input2.fontShader(&fontShader);
-    input2.characters(fontConfigs.Characters);
-    input2.text("My Default Text");
-    input2.setUpPosition();
+//    InputText inputText(window, mode->width, mode->height);
+//    inputText.scaleX(0.2);
+//    inputText.scaleY(0.03);
+//    inputText.fontShader(&fontShader);
+//    inputText.characters(fontConfigs.Characters);
+//    inputText.setUpPosition();
+//
+//    InputText input2(window, mode->width, mode->height);
+//    input2.fontShader(&fontShader);
+//    input2.characters(fontConfigs.Characters);
+//    input2.text("My Default Text");
+//    input2.setUpPosition();
 
     TextDraw playerText(&fontShader, mode->width, mode->height);
     playerText.characters(fontConfigs.Characters);
@@ -183,17 +204,17 @@ int main() {
         playerText.text("Created By Cod3r Kane");
         playerText.render();
 
-        inputText.setupInputs(mouseButton, mouseAction, keyboardkey, charCodePoint);
-        inputText.x(-0.78f);
-        inputText.y(0.78f);
-        inputText.render();
-        inputText.receiveKeyboardEvents();
-
-        input2.setupInputs(mouseButton, mouseAction, keyboardkey, charCodePoint);
-        input2.y(0.78f);
-        input2.x(0.78f);
-        input2.receiveKeyboardEvents();
-        input2.render();
+//        inputText.setupInputs(mouseButton, mouseAction, keyboardkey, charCodePoint);
+//        inputText.x(-0.78f);
+//        inputText.y(0.78f);
+//        inputText.render();
+//        inputText.receiveKeyboardEvents();
+//
+//        input2.setupInputs(mouseButton, mouseAction, keyboardkey, charCodePoint);
+//        input2.y(0.78f);
+//        input2.x(0.78f);
+//        input2.receiveKeyboardEvents();
+//        input2.render();
 
         for (int i = 0; i < 50; i++) {
             cubes[i]->setViewMatrix(camera.GetViewMatrix());
