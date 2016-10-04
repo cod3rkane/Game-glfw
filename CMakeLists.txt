@@ -10,7 +10,9 @@ find_package(OpenGL REQUIRED)
 #find_package(glm REQUIRED)
 #find_package(freetype REQUIRED)
 
-find_package(glfw3 REQUIRED)
+#find_package(glfw3 REQUIRED)
+
+find_package(glfw3 3.2 REQUIRED)
 
 pkg_search_module(GLFW REQUIRED glfw3)
 include_directories(${GLFW_INCLUDE_DIRS})
@@ -28,4 +30,4 @@ set(SOURCE_FILES main.cpp components/Button.cpp components/Button.h util/Shader.
 add_executable(Game ${SOURCE_FILES})
 
 include_directories(${GLEW_INCLUDE_DIRS} ${OPENGL_INCLUDE_DIR})
-target_link_libraries(Game ${GLFW_LIBRARIES} glfw ${OPENGL_LIBRARIES} ${GLEW_LIBRARIES} ${OPENGL_gl_LIBRARY} SOIL freetype)
+target_link_libraries(Game ${GLFW_LIBRARIES} ${OPENGL_LIBRARIES} ${GLEW_LIBRARIES} ${OPENGL_gl_LIBRARY} SOIL freetype)
