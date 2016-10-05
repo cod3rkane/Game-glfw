@@ -115,6 +115,9 @@ int main() {
     glfwSetCursorPosCallback(window, mouse_callback);
     glfwMakeContextCurrent(window);
 
+    // @todo remove this line
+    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+
     glewExperimental = GL_TRUE;
     if (glewInit() != GLEW_OK) {
         cout << "Failed to initialize Glew" << endl;
@@ -166,18 +169,6 @@ int main() {
     Shader fontShader("assets/Shaders/FontVertexShader.glsl", "assets/Shaders/FontFragmentShader.glsl");
     FontConfigs fontConfigs(18);
     // ### End Font Configs
-//    InputText inputText(window, mode->width, mode->height);
-//    inputText.scaleX(0.2);
-//    inputText.scaleY(0.03);
-//    inputText.fontShader(&fontShader);
-//    inputText.characters(fontConfigs.Characters);
-//    inputText.setUpPosition();
-//
-//    InputText input2(window, mode->width, mode->height);
-//    input2.fontShader(&fontShader);
-//    input2.characters(fontConfigs.Characters);
-//    input2.text("My Default Text");
-//    input2.setUpPosition();
 
     TextDraw playerText(&fontShader, mode->width, mode->height);
     playerText.characters(fontConfigs.Characters);
@@ -203,18 +194,6 @@ int main() {
         playerText.scale(1.0f);
         playerText.text("Created By Cod3r Kane");
         playerText.render();
-
-//        inputText.setupInputs(mouseButton, mouseAction, keyboardkey, charCodePoint);
-//        inputText.x(-0.78f);
-//        inputText.y(0.78f);
-//        inputText.render();
-//        inputText.receiveKeyboardEvents();
-//
-//        input2.setupInputs(mouseButton, mouseAction, keyboardkey, charCodePoint);
-//        input2.y(0.78f);
-//        input2.x(0.78f);
-//        input2.receiveKeyboardEvents();
-//        input2.render();
 
         for (int i = 0; i < 50; i++) {
             cubes[i]->setViewMatrix(camera.GetViewMatrix());
