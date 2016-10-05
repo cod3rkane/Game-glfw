@@ -209,7 +209,9 @@ void Cube::render() {
 
     glBindVertexArray(this->VAO);
 //    glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
+    glEnable(GL_DEPTH_TEST);
     glDrawArrays(GL_TRIANGLES, 0, 36);
+    glDisable(GL_DEPTH_TEST);
     glBindVertexArray(0);
 }
 
