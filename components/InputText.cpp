@@ -5,8 +5,6 @@
 #include "InputText.h"
 
 // Initialize Static Properties.
-double InputText::mouseXpos = 0.0f;
-double InputText::mouseYPos = 0.0f;
 int InputText::windowW = 0;
 int InputText::windowH = 0;
 string InputText::convertCharToString = "";
@@ -15,7 +13,6 @@ InputText::InputText(GLFWwindow *window, int windowWidth, int windowHeight) {
     this->windowW = windowWidth;
     this->windowH = windowHeight;
     // Set cursor position callback
-    glfwSetCursorPosCallback(window, this->cursorPositionCallBack);
     GLfloat colorData[] = {
             0.50f, 0.49f, 0.49f,
             0.50f, 0.49f, 0.49f,
@@ -77,25 +74,6 @@ void InputText::setUpPosition() {
     glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 2, (GLvoid *) 0);
 }
 
-/**
- * Receive the cursor position and assign Y and X position
- * @param xpos
- * @param ypos
- */
-void InputText::cursorPositionCallBack(GLFWwindow* window, double xpos, double ypos) {
-    /**
-     * Convert x,y position in x,y projection position. Example X = 1280 in 1.0 or Window full width in 1.0 a 0.0
-     */
-    InputText::mouseXpos = xpos * (2.0f / InputText::windowW) - 1.0f;
-    /**
-     * When mouse in top Y need to negative number. For fixed this add * -1
-     */
-    InputText::mouseYPos = (ypos * (2.0f / InputText::windowH) - 1.0f) * -1;
-
-//    cout << "Mouse Xpos: " << xpos << " Converted: " <<  InputText::mouseXpos << " Teste Calc: " << ((InputText::mouseXpos + 1.0f) * (InputText::windowW / 2.0f)) << endl;
-//    cout << "Mouse Ypos: " << ypos << " Converted: " <<  InputText::mouseYPos << " Teste Calc: " << ((-InputText::mouseYPos + 1.0f) * (InputText::windowH / 2.0f)) << endl;
-}
-
 void InputText::render() {
     glDisable(GL_DEPTH_TEST);
     glEnable(GL_BLEND);
@@ -142,8 +120,10 @@ void InputText::y(GLfloat ypos) {
  * Check if mouse is above of element.
  */
 void InputText::mouseOver() {
-    if ((this->mouseYPos >= (this->yPos - this->yScale) && this->mouseYPos <= (this->yPos + this->yScale)) &&
-        (this->mouseXpos >= (this->xPos - this->xScale) && this->mouseXpos <= (this->xPos + this->xScale))) {
+    double mouseXpos = Mouse::getXpos() * (2.0f / InputText::windowW);
+    double mouseYpos = (Mouse::getYpos() * (2.0f / InputText::windowH) - 1.0f) * -1;
+    if ((mouseYpos >= (this->yPos - this->yScale) && mouseYpos <= (this->yPos + this->yScale)) &&
+        (mouseXpos - 1.0f >= (this->xPos - this->xScale) && mouseXpos <= (this->xPos + this->xScale))) {
         this->opacity = 0.6f;
         this->isMouseOver = true;
     } else {

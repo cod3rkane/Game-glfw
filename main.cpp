@@ -88,7 +88,10 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos) {
     camera.ProcessMouseMovement(xoffset, yoffset);
 }
 
-int main() {
+int main(int argc, char** argv) {
+    // @todo used for alter monitor or NULL when we're create window.
+    string isDebug = (argc > 1 ? argv[1] : "");
+
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -98,7 +101,7 @@ int main() {
     monitor = glfwGetPrimaryMonitor();
     mode = glfwGetVideoMode(monitor);
 
-    window = glfwCreateWindow(mode->width, mode->height, "Project Melkor - Roch Studio", monitor, NULL);
+    window = glfwCreateWindow(mode->width, mode->height, "Project Melkor - Roch Studio", (isDebug == "debug" ? NULL : monitor), NULL);
     if (!window) {
         cout << "could not create Window" << endl;
         glfwTerminate();
@@ -180,7 +183,7 @@ int main() {
 
         // Game Logic here
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        glClearColor(0.400f, 0.750f, 1.00f, 1.0f);
+        glClearColor(0.0, 0.0, 0.0, 1.0f);
 
         // Set frame time
         GLfloat currentFrame = glfwGetTime();
@@ -214,8 +217,7 @@ int main() {
 }
 
 // Moves/alters the camera positions based on user input
-void Do_Movement()
-{
+void Do_Movement() {
     // Camera controls
     if(keys[GLFW_KEY_W])
         camera.ProcessKeyboard(FORWARD, deltaTime);

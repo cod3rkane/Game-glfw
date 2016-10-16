@@ -15,13 +15,13 @@
 #include "TextDraw.h"
 #include <map>
 #include "../util/Character.h"
+#include "../util/io/Mouse.h"
 
 using namespace std;
 
 class InputText {
     string inputText;
     static string convertCharToString;
-    static double mouseXpos, mouseYPos;
     static int windowW, windowH;
     GLuint VBO[2], VAO, EBO;
     Shader shader = Shader("assets/Shaders/Color-Position-Projection.vert", "assets/Shaders/Color-Position-Projection.frag");
@@ -41,7 +41,6 @@ class InputText {
     // Esses métodos estaticos precisam sumir logo, o ideal é termos um unico GLFWsetMousePositionCallback e e GLFWSetMouseButtonCallback
     // Mas para fazermos isso precisamos terminar nossa Classe de Window(GameWindow) e GameLoop.
     // @todo remove cursorPositionCallBack and mouseButtonCallback when Window and GameLoop Class done.
-    static void cursorPositionCallBack(GLFWwindow* window, double xpos, double ypos);
     void mouseOver();
     void mouseClick();
     void setUpTextDraw();
