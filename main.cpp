@@ -6,9 +6,8 @@
 #include "components/TextDraw.h"
 #include "components/InputText.h"
 #include "components/Cube.h"
-#include "util/ProjectionMatrix.h"
 #include "util/Camera.h"
-#include "util/io/Mouse.h"
+#include "util/ObjLoader.h"
 
 using namespace std;
 
@@ -119,7 +118,9 @@ int main(int argc, char** argv) {
     glfwMakeContextCurrent(window);
 
     // @todo remove this line
-    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    if (isDebug != "debug") {
+        glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    }
 
     glewExperimental = GL_TRUE;
     if (glewInit() != GLEW_OK) {
@@ -176,6 +177,9 @@ int main(int argc, char** argv) {
     TextDraw playerText(&fontShader, mode->width, mode->height);
     playerText.characters(fontConfigs.Characters);
     playerText.color(glm::vec3(0.5, 0.8f, 0.2f));
+
+    ObjLoader stallObj = ObjLoader();
+    stallObj.loadObj("assets/Models/stall.obj");
 
     while (!glfwWindowShouldClose(window)) {
         // Check and call events
