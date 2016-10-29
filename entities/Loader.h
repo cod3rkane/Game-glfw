@@ -6,12 +6,22 @@
 #define GAME_LOADER_H
 
 #include "RawModel.h"
+#include <GL/glew.h>
+#include <vector>
+
+using namespace std;
 
 class Loader {
 private:
-    int createVAO();
+    vector<GLuint> VAOS;
+    vector<GLuint> VBOS;
+    vector<GLuint> textures;
+    GLuint createVAO();
+    void unbindVAO();
+    void storeDataInAttributeList(GLuint attributeNumber, GLuint coordinateSize, GLfloat data[]);
+    void bindIndicesBuffer(GLuint indices[]);
 public:
-    RawModel loadToVAO();
+    RawModel loadToVAO(GLfloat positions[], GLuint indices[]);
 };
 
 #endif

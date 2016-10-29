@@ -1,19 +1,19 @@
 #include "RawModel.h"
 
-RawModel::RawModel(int VaoID, int VertexCount) : VaoID(VaoID), VertexCount(VertexCount) {}
+RawModel::RawModel(GLuint VaoID, GLuint VertexCount) : VaoID(VaoID), VertexCount(VertexCount) {}
 
-int RawModel::getVaoID() const {
+GLuint RawModel::getVaoID() const {
     return VaoID;
 }
 
-void RawModel::setVaoID(int VaoID) {
+void RawModel::setVaoID(GLuint VaoID) {
     RawModel::VaoID = VaoID;
 }
 
-int RawModel::getVertexCount() const {
+GLuint RawModel::getVertexCount() const {
     return VertexCount;
 }
 
-void RawModel::setVertexCount(int VertexCount) {
+void RawModel::setVertexCount(GLuint VertexCount) {
     RawModel::VertexCount = VertexCount;
 }

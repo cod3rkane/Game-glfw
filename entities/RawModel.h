@@ -5,10 +5,12 @@
 #ifndef GAME_RAWMODEL_H
 #define GAME_RAWMODEL_H
 
+#include <GL/glew.h>
+
 class RawModel {
 private:
-    int VaoID;
-    int VertexCount;
+    GLuint VaoID;
+    GLuint VertexCount;
 public:
 
     /**
@@ -16,7 +18,7 @@ public:
      * @param int VaoID
      * @param int VertexCount
      */
-    RawModel(int VaoID, int VertexCount);
+    RawModel(GLuint VaoID, GLuint VertexCount);
 
     /**
      * Empty constructor class
@@ -27,25 +29,25 @@ public:
      * Get VaoID
      * @return int
      */
-    int getVaoID() const;
+    GLuint getVaoID() const;
 
     /**
      * set VaoID
      * @param int VaoID
      */
-    void setVaoID(int VaoID);
+    void setVaoID(GLuint VaoID);
 
     /**
      * get VertexCount
      * @return int
      */
-    int getVertexCount() const;
+    GLuint getVertexCount() const;
 
     /**
      * set VertexCount
      * @param int VertexCount
      */
-    void setVertexCount(int VertexCount);
+    void setVertexCount(GLuint VertexCount);
 };
 
 #endif // GAME_OBJLOADER_H
