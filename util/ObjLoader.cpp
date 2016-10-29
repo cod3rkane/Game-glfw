@@ -4,7 +4,7 @@
 
 #include "ObjLoader.h"
 
-void ObjLoader::loadObj(const GLchar* file) {
+RawModel ObjLoader::loadObj(const GLchar* file, Loader &loader) {
     // Read file in binary mode
     ifstream stallBin(file, ios::binary);
 
@@ -15,7 +15,7 @@ void ObjLoader::loadObj(const GLchar* file) {
     string delimiter = "/";
     size_t found;
     vector<glm::vec3> vertexVector;
-    vector<int> vertexIndices;
+    vector<GLuint> vertexIndices;
     vector<string> fs;
     glm::vec3 v;
 
@@ -89,6 +89,7 @@ void ObjLoader::loadObj(const GLchar* file) {
 
     cout << "size of vertexIndices: " << sizeof(vertices) << endl;
     cout << "size of vertexVector: " << sizeof(indices) << endl;
+    return loader.loadToVAO(vertices, indices);
 }
 
 ObjLoader::~ObjLoader() {

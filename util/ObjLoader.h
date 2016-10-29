@@ -14,6 +14,8 @@
 #include <iterator>
 #include <vector>
 #include <unordered_map>
+#include "../entities/Loader.h"
+#include "../entities/RawModel.h"
 
 using namespace std;
 
@@ -21,7 +23,7 @@ class ObjLoader {
 public:
     ObjLoader() {};
     ~ObjLoader();
-    void loadObj(const GLchar* file);
+    RawModel loadObj(const GLchar* file, Loader &loader);
 };
 
 #endif // GAME_OBJLOADER_H

@@ -178,8 +178,9 @@ int main(int argc, char** argv) {
     playerText.characters(fontConfigs.Characters);
     playerText.color(glm::vec3(0.5, 0.8f, 0.2f));
 
+    Loader loader;
     ObjLoader stallObj = ObjLoader();
-    stallObj.loadObj("assets/Models/stall.obj");
+    stallObj.loadObj("assets/Models/stall.obj", loader);
 
     while (!glfwWindowShouldClose(window)) {
         // Check and call events
