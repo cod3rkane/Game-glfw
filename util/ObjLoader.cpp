@@ -2,98 +2,93 @@
 // Created by Cod3r Kane on 10/17/2016
 //
 
-#include <iterator>
-#include <vector>
-#include <unordered_map>
 #include "ObjLoader.h"
 
-void ObjLoader::loadObj(const GLchar* objFile) {
-    string objCode;
-    ifstream objFileStream;
-    objFileStream.exceptions(ifstream::badbit);
-    stringstream stream;
+void ObjLoader::loadObj(const GLchar* file) {
+    // Read file in binary mode
+    ifstream stallBin(file, ios::binary);
 
-    try {
-        objFileStream.open(objFile);
-        stream << objFileStream.rdbuf();
-        objFileStream.close();
-        objCode = stream.str();
-    } catch (ifstream::failure e) {
-        cout << "ERROR::OBJLOADER::FILE_NOT_SUCCESFULLY_READ" << endl;
-    }
+    const int Max = 80;
+    char buff[Max];
+    vector<string> tokens;
+    string currLine;
+    string delimiter = "/";
+    size_t found;
+    vector<glm::vec3> vertexVector;
+    vector<int> vertexIndices;
+    vector<string> fs;
+    glm::vec3 v;
 
-    cout << objCode.c_str() << endl;
+    while (!stallBin.eof()) {
+        stallBin.getline(buff, Max);
+        currLine = buff;
 
-    const int maxBuffer = 80;
-    char lineChar[maxBuffer];
-    string line;
-    vector<glm::vec3> vertices;
-    vector<glm::vec2> textures;
-    vector<glm::vec3> normals;
-    vector<int> indices;
+        istringstream strToSplit(currLine);
+        // split str in space
+        for (string s; strToSplit >> s;) {
+            tokens.push_back(s);
+        }
 
-    // @todo fazer um loop infinito para ler cada linha do .obj e pegar os v, vt, vn e f
-    while (!stream.eof()) {
-        vector<string> tokens;
-        stream.getline(lineChar, maxBuffer);
-        line = lineChar;
+        if (tokens[0] == "v") {
+            // cout << "its :v:" << endl;
+            // cout << currLine << endl;
+            v = glm::vec3(stof(tokens[1]), stof(tokens[2]), stof(tokens[3]));
+            vertexVector.push_back(v);
+            // cout << v.x << " " << v.y << " " << v.z << endl;
+        } else if (tokens[0] == "vt") {
+            cout << "its :vt:" << endl;
+        } else if (tokens[0] == "vn") {
+            cout << "its :vn:" << endl;
+        } else if (tokens[0] == "f") {
+            cout << "its :f:" << endl;
+            for (int i = 1; i < tokens.size(); i++) {
+                cout << tokens[i] << endl;
+                while (tokens[i].find(delimiter) != string::npos) {
+                    found = tokens[i].find(delimiter);
+                    tokens[i].replace(found, 1, " ");
+                }
 
-        if (line != "") {
-            istringstream iss(line);
-            copy(istream_iterator<string>(iss), istream_iterator<string>(), back_inserter(tokens));
-
-            if (tokens[0] == "v") {
-                // Get vertices
-                // @todo se der algum erro de posições muito loucas, pode ser aqui, não está convertendo exatamente igual.
-                glm::vec3 v(stof(tokens[1]), stof(tokens[2]), stof(tokens[3]));
-                vertices.push_back(v);
-            } else if (tokens[0] == "vt") {
-                // Get textures
-                glm::vec2 vt(stof(tokens[1]), stof(tokens[2]));
-                textures.push_back(vt);
-            } else if (tokens[0] == "vn") {
-                glm::vec3 vn(stof(tokens[1]), stof(tokens[2]), stof(tokens[3]));
-                normals.push_back(vn);
+                istringstream str(tokens[i]);
+                // split str in space
+                for (string s2; str >> s2;) {
+                    fs.push_back(s2);
+                }
+                cout << "normal string " << tokens[i] << endl;
+                // for (int a = 0; a < fs.size(); a++) {
+                //     // cout << "result: " << fs[a] << endl;
+                //     // pegamos somente a posição 0 referente aos vertices por enquanto.
+                //     vertexIndices.push_back(stoi(fs[0]));
+                //     cout << "Added value: " << fs[0] << endl;
+                // }
+                cout << "Added value: " << fs[0] << endl;
+                vertexIndices.push_back(stoi(fs[0]));
+                fs.clear();
             }
         }
+
+        tokens.clear();
     }
 
-    stream.clear();
-    stream.str(objCode);
+    // cout << "size of vertexIndices: " << vertexIndices.size() << endl;
+    // cout << "size of vertexVector: " << vertexVector.size() << endl;
 
-    while (!stream.eof()) {
-        vector<string> tokens;
-        stream.getline(lineChar, maxBuffer);
-        line = lineChar;
+    // vezes 3 porque temos x,y e z
+    GLfloat vertices[vertexVector.size()*3];
+    GLuint indices[vertexIndices.size()];
 
-        if (line != "") {
-            istringstream iss(line);
-            copy(istream_iterator<string>(iss), istream_iterator<string>(), back_inserter(tokens));
-
-            if (tokens[0] != "f") {
-                continue;
-            }
-
-            string delimiter = "/";
-            indices.push_back(stoi(tokens[1].substr(0, tokens[1].find(delimiter))));
-            indices.push_back(stoi(tokens[2].substr(0, tokens[1].find(delimiter))));
-            indices.push_back(stoi(tokens[3].substr(0, tokens[1].find(delimiter))));
-        }
+    int i = 0;
+    for (int a = 0; a < vertexVector.size(); a++) {
+        vertices[i++] = vertexVector[a].x;
+        vertices[i++] = vertexVector[a].y;
+        vertices[i++] = vertexVector[a].z;
     }
 
-    float vertexArray[vertices.size()*3];
-    int indicesArray[indices.size()];
-
-    int vertexPointer = 0, i = 0;
-    for (vertexPointer; vertexPointer < vertices.size();) {
-        vertexArray[vertexPointer++] = vertices[i].x;
-        vertexArray[vertexPointer++] = vertices[i].y;
-        vertexArray[vertexPointer++] = vertices[i].z;
+    for (int i = 0; i < vertexIndices.size(); i++) {
+        indices[i] = (vertexIndices[i] - 1);
     }
 
-    for (i = 0; i < indices.size(); i++) {
-        indicesArray[i] = (indices[i]) - 1;
-    }
+    cout << "size of vertexIndices: " << sizeof(vertices) << endl;
+    cout << "size of vertexVector: " << sizeof(indices) << endl;
 }
 
 ObjLoader::~ObjLoader() {

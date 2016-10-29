@@ -11,6 +11,9 @@
 #include <list>
 #include <GL/glew.h>
 #include <glm/ext.hpp>
+#include <iterator>
+#include <vector>
+#include <unordered_map>
 
 using namespace std;
 
@@ -18,7 +21,7 @@ class ObjLoader {
 public:
     ObjLoader() {};
     ~ObjLoader();
-    void loadObj(const GLchar* objFile);
+    void loadObj(const GLchar* file);
 };
 
 #endif // GAME_OBJLOADER_H
