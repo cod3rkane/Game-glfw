@@ -9,7 +9,7 @@ RawModel Loader::loadToVAO(GLfloat positions[], GLuint indices[]) {
     this->bindIndicesBuffer(indices);
     this->storeDataInAttributeList(0, 3, positions);
     this->unbindVAO();
-    return RawModel(vaoID, sizeof(indices));
+    return RawModel(vaoID, sizeof(*indices));
 }
 
 GLuint Loader::createVAO() {
@@ -29,7 +29,7 @@ void Loader::storeDataInAttributeList(GLuint attributeNumber, GLuint coordinateS
     glGenBuffers(1, &vboID);
     this->VBOS.push_back(vboID);
     glBindBuffer(GL_ARRAY_BUFFER, vboID);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(data), data, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(*data), data, GL_STATIC_DRAW);
     glEnableVertexAttribArray(attributeNumber);
     glVertexAttribPointer(attributeNumber, coordinateSize, GL_FLOAT, GL_FALSE, 0, NULL);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -40,5 +40,5 @@ void Loader::bindIndicesBuffer(GLuint indices[]) {
     glGenBuffers(1, &vboID);
     this->VBOS.push_back(vboID);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vboID);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(*indices), indices, GL_STATIC_DRAW);
 }
