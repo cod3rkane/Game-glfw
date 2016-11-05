@@ -6,8 +6,10 @@
 #include "components/TextDraw.h"
 #include "components/InputText.h"
 #include "components/Cube.h"
+#include "components/ObjModel.h"
 #include "util/Camera.h"
 #include "util/ObjLoader.h"
+#include "entities/RawModel.h"
 
 using namespace std;
 
@@ -180,7 +182,10 @@ int main(int argc, char** argv) {
 
     Loader loader;
     ObjLoader stallObj = ObjLoader();
-    stallObj.loadObj("assets/Models/stall.obj", loader);
+    RawModel firstRawModel = stallObj.loadObj("assets/Models/stall.obj", loader);
+    ObjModel stallModel(modelViewProjectionTextured, firstRawModel);
+    Entity test(0, vec3(0, 0, -50), 0, 0, 0, 1);
+    stallModel.setEntity(test);
 
     while (!glfwWindowShouldClose(window)) {
         // Check and call events
@@ -208,6 +213,10 @@ int main(int argc, char** argv) {
             cubes[i]->setProjectionMatrix(projectionMatrix);
             cubes[i]->render();
         }
+
+        stallModel.setViewMatrix(camera.GetViewMatrix());
+        stallModel.setProjectionMatrix(projectionMatrix);
+        stallModel.render();
 
         glfwSwapBuffers(window);
 

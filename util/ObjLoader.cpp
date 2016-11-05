@@ -89,7 +89,7 @@ RawModel ObjLoader::loadObj(const GLchar* file, Loader &loader) {
 
     cout << "size of vertexIndices: " << sizeof(vertices) << endl;
     cout << "size of vertexVector: " << sizeof(indices) << endl;
-    return loader.loadToVAO(vertices, indices);
+    return loader.loadToVAO(vertexVector, vertexIndices);
 }
 
 ObjLoader::~ObjLoader() {

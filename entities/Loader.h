@@ -8,6 +8,7 @@
 #include "RawModel.h"
 #include <GL/glew.h>
 #include <vector>
+#include <glm/vec3.hpp>
 
 using namespace std;
 
@@ -18,10 +19,10 @@ private:
     vector<GLuint> textures;
     GLuint createVAO();
     void unbindVAO();
-    void storeDataInAttributeList(GLuint attributeNumber, GLuint coordinateSize, GLfloat data[]);
-    void bindIndicesBuffer(GLuint indices[]);
+    void storeDataInAttributeList(GLuint attributeNumber, GLuint coordinateSize, const vector<glm::vec3> &positions);
+    void bindIndicesBuffer(const vector<GLuint> &indices);
 public:
-    RawModel loadToVAO(GLfloat positions[], GLuint indices[]);
+    RawModel loadToVAO(const vector<glm::vec3> &positions, const vector<GLuint> &indices);
 };
 
 #endif
