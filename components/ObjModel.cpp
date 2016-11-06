@@ -27,6 +27,14 @@ void ObjModel::render() {
             this->projectionMatrix->getFarPlane()
     );
 
+    // Bind myTexture using myTexture units
+    if (this->texture) {
+        // Bind myTexture using myTexture units
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, this->texture);
+        glUniform1i(glGetUniformLocation(this->shader->program, "ourTexture"), 0);
+    }
+
     GLint transformationMatrixLocation = glGetUniformLocation(this->shader->program, "transform");
     GLint viewMatrixLocation = glGetUniformLocation(this->shader->program, "view");
     GLint projectionMatrixLocation = glGetUniformLocation(this->shader->program, "projection");
@@ -50,6 +58,34 @@ void ObjModel::setProjectionMatrix(const ProjectionMatrix &projectionMatrix) {
 
 void ObjModel::setViewMatrix(const mat4 &viewMatrix) {
     this->viewMatrix = &viewMatrix;
+}
+
+void ObjModel::textureImage(unsigned char *image, int width, int height, GLenum format) {
+    // @todo test if image has valid.
+    try {
+        // Load and create myTexture
+        glGenTextures(1, &this->texture);
+        glBindTexture(GL_TEXTURE_CUBE_MAP, this->texture);
+        // Set out myTexture parameters
+        glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        // Set myTexture filtering
+        glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+        glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+
+        glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, image);
+        glGenerateMipmap(GL_TEXTURE_2D);
+        // Free memory image
+        SOIL_free_image_data(image);
+        glBindVertexArray(0);
+        glBindTexture(GL_TEXTURE_2D, 0);
+    } catch (unsigned char *image) {
+        cout << "couldn't load image because: " << image << endl;
+        throw "Error";
+    } catch (int num) {
+        cout << "couldn't load image because: " << num << endl;
+        throw "Error";
+    }
 }
 
 ObjModel::~ObjModel() {

@@ -13,6 +13,7 @@
 #include <GL/glew.h>
 #include <glm/glm.hpp>
 #include <glm/ext.hpp>
+#include <SOIL/SOIL.h>
 
 using namespace glm;
 using namespace std;
@@ -25,6 +26,7 @@ private:
     const mat4 *viewMatrix;
     Maths maths;
     const RawModel *rawModel;
+    GLuint texture;
 public:
     ObjModel(Shader &shader, const RawModel &rawModel);
     ~ObjModel();
@@ -32,6 +34,7 @@ public:
     void setEntity(const Entity &entity);
     void setProjectionMatrix(const ProjectionMatrix &projectionMatrix);
     void setViewMatrix(const mat4 &viewMatrix);
+    void textureImage(unsigned char *image, int width, int height, GLenum format);
 };
 
 #endif

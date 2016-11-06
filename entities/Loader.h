@@ -9,6 +9,7 @@
 #include <GL/glew.h>
 #include <vector>
 #include <glm/vec3.hpp>
+#include <glm/vec2.hpp>
 
 using namespace std;
 
@@ -20,9 +21,12 @@ private:
     GLuint createVAO();
     void unbindVAO();
     void storeDataInAttributeList(GLuint attributeNumber, GLuint coordinateSize, const vector<glm::vec3> &positions);
+    void storeDataInAttributeList(GLuint attributeNumber, GLuint coordinateSize, const vector<glm::vec2> &positions);
     void bindIndicesBuffer(const vector<GLuint> &indices);
 public:
     RawModel loadToVAO(const vector<glm::vec3> &positions, const vector<GLuint> &indices);
+    RawModel loadToVAO(const vector<glm::vec3> &positions, const vector<GLuint> &indices, const vector<glm::vec2> &textures,
+                       const vector<glm::vec3> &normals);
 };
 
 #endif

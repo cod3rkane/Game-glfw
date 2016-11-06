@@ -11,13 +11,14 @@ RawModel ObjLoader::loadObj(const GLchar* file, Loader &loader) {
     const int Max = 80;
     char buff[Max];
     vector<string> tokens;
-    string currLine;
-    string delimiter = "/";
+    string currLine, delimiter = "/";
     size_t found;
-    vector<glm::vec3> vertexVector;
-    vector<GLuint> vertexIndices;
+    vector<glm::vec3> vertexVector, vertexNormals;
+    vector<glm::vec2> vertexTexture, vertexTextureNormalized;
+    vector<GLuint> vertexIndices, vertexFTextures;
     vector<string> fs;
-    glm::vec3 v;
+    glm::vec3 v, vn;
+    glm::vec2 vt;
 
     while (!stallBin.eof()) {
         stallBin.getline(buff, Max);
@@ -33,9 +34,11 @@ RawModel ObjLoader::loadObj(const GLchar* file, Loader &loader) {
             v = glm::vec3(stof(tokens[1]), stof(tokens[2]), stof(tokens[3]));
             vertexVector.push_back(v);
         } else if (tokens[0] == "vt") {
-            cout << "its :vt:" << endl;
+            vt = glm::vec2(stof(tokens[1]), stof(tokens[2]));
+            vertexTexture.push_back(vt);
         } else if (tokens[0] == "vn") {
-            cout << "its :vn:" << endl;
+            vn = glm::vec3(stof(tokens[1]), stof(tokens[2]), stof(tokens[3]));
+            vertexNormals.push_back(vn);
         } else if (tokens[0] == "f") {
             for (int i = 1; i < tokens.size(); i++) {
                 while (tokens[i].find(delimiter) != string::npos) {
@@ -50,6 +53,7 @@ RawModel ObjLoader::loadObj(const GLchar* file, Loader &loader) {
                 }
 
                 vertexIndices.push_back(stoi(fs[0]));
+                vertexFTextures.push_back(stoi(fs[1]));
                 fs.clear();
             }
         }
@@ -57,22 +61,7 @@ RawModel ObjLoader::loadObj(const GLchar* file, Loader &loader) {
         tokens.clear();
     }
 
-    // vezes 3 porque temos x,y e z
-    GLfloat vertices[vertexVector.size()*3];
-    GLuint indices[vertexIndices.size()];
-
-    int i = 0;
-    for (int a = 0; a < vertexVector.size(); a++) {
-        vertices[i++] = vertexVector[a].x;
-        vertices[i++] = vertexVector[a].y;
-        vertices[i++] = vertexVector[a].z;
-    }
-
-    for (int i = 0; i < vertexIndices.size(); i++) {
-        indices[i] = (vertexIndices[i] - 1);
-    }
-
-    return loader.loadToVAO(vertexVector, vertexIndices);
+    return loader.loadToVAO(vertexVector, vertexIndices, vertexTexture, vertexNormals);
 }
 
 ObjLoader::~ObjLoader() {
