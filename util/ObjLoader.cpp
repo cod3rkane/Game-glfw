@@ -30,19 +30,14 @@ RawModel ObjLoader::loadObj(const GLchar* file, Loader &loader) {
         }
 
         if (tokens[0] == "v") {
-            // cout << "its :v:" << endl;
-            // cout << currLine << endl;
             v = glm::vec3(stof(tokens[1]), stof(tokens[2]), stof(tokens[3]));
             vertexVector.push_back(v);
-            // cout << v.x << " " << v.y << " " << v.z << endl;
         } else if (tokens[0] == "vt") {
             cout << "its :vt:" << endl;
         } else if (tokens[0] == "vn") {
             cout << "its :vn:" << endl;
         } else if (tokens[0] == "f") {
-            cout << "its :f:" << endl;
             for (int i = 1; i < tokens.size(); i++) {
-                cout << tokens[i] << endl;
                 while (tokens[i].find(delimiter) != string::npos) {
                     found = tokens[i].find(delimiter);
                     tokens[i].replace(found, 1, " ");
@@ -53,14 +48,7 @@ RawModel ObjLoader::loadObj(const GLchar* file, Loader &loader) {
                 for (string s2; str >> s2;) {
                     fs.push_back(s2);
                 }
-                cout << "normal string " << tokens[i] << endl;
-                // for (int a = 0; a < fs.size(); a++) {
-                //     // cout << "result: " << fs[a] << endl;
-                //     // pegamos somente a posição 0 referente aos vertices por enquanto.
-                //     vertexIndices.push_back(stoi(fs[0]));
-                //     cout << "Added value: " << fs[0] << endl;
-                // }
-                cout << "Added value: " << fs[0] << endl;
+
                 vertexIndices.push_back(stoi(fs[0]));
                 fs.clear();
             }
@@ -68,9 +56,6 @@ RawModel ObjLoader::loadObj(const GLchar* file, Loader &loader) {
 
         tokens.clear();
     }
-
-    // cout << "size of vertexIndices: " << vertexIndices.size() << endl;
-    // cout << "size of vertexVector: " << vertexVector.size() << endl;
 
     // vezes 3 porque temos x,y e z
     GLfloat vertices[vertexVector.size()*3];
@@ -87,8 +72,6 @@ RawModel ObjLoader::loadObj(const GLchar* file, Loader &loader) {
         indices[i] = (vertexIndices[i] - 1);
     }
 
-    cout << "size of vertexIndices: " << sizeof(vertices) << endl;
-    cout << "size of vertexVector: " << sizeof(indices) << endl;
     return loader.loadToVAO(vertexVector, vertexIndices);
 }
 

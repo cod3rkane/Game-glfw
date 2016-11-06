@@ -139,6 +139,11 @@ int main(int argc, char** argv) {
             "assets/Shaders/ModelViewProjectionTextured.frag"
     );
 
+    Shader modelViewProjectionColor(
+            "assets/Shaders/ModelViewProjection.vert",
+            "assets/Shaders/ModelViewProjection.frag"
+    );
+
     ProjectionMatrix projectionMatrix;
     projectionMatrix.setAspectRatio((GLfloat)mode->width / mode->height);
 
@@ -183,7 +188,7 @@ int main(int argc, char** argv) {
     Loader loader;
     ObjLoader stallObj = ObjLoader();
     RawModel firstRawModel = stallObj.loadObj("assets/Models/stall.obj", loader);
-    ObjModel stallModel(modelViewProjectionTextured, firstRawModel);
+    ObjModel stallModel(modelViewProjectionColor, firstRawModel);
     Entity test(0, vec3(0, 0, -50), 0, 0, 0, 1);
     stallModel.setEntity(test);
 
