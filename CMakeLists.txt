@@ -1,30 +1,28 @@
 cmake_minimum_required(VERSION 3.5)
 project(Game)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++11")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
 find_package(PkgConfig REQUIRED)
 find_package(OpenGL REQUIRED)
-#find_package(GLEW REQUIRED)
-#find_package(glfw3 REQUIRED)
+find_package(GLEW REQUIRED)
+find_package(GLUT REQUIRED)
 #find_package(glm REQUIRED)
 #find_package(freetype REQUIRED)
-
-#find_package(glfw3 REQUIRED)
 
 find_package(glfw3 3.2 REQUIRED)
 
 pkg_search_module(GLFW REQUIRED glfw3)
 include_directories(${GLFW_INCLUDE_DIRS})
 
-pkg_search_module(freetype REQUIRED freetype2)
-include_directories(${freetype_INCLUDE_DIRS})
+find_package(Freetype REQUIRED)
+include_directories(${FREETYPE_INCLUDE_DIRS})
 
 pkg_search_module(GLEW REQUIRED glew)
 include_directories(${GLEW_INCLUDE_DIRS})
 
-pkg_search_module(GLU REQUIRED glu)
-include_directories(${GLU_INCLUDE_DIRS})
+include_directories(includes/include/SOIL)
+link_directories(includes/lib)
 
 set(SOURCE_FILES main.cpp components/Button.cpp components/Button.h util/Shader.cpp util/Shader.h
         components/Rectangle.cpp components/Rectangle.h util/FontConfigs.cpp util/FontConfigs.h util/Character.h
@@ -37,5 +35,6 @@ set(SOURCE_FILES main.cpp components/Button.cpp components/Button.h util/Shader.
         )
 add_executable(Game ${SOURCE_FILES})
 
-include_directories(${GLEW_INCLUDE_DIRS} ${OPENGL_INCLUDE_DIR})
-target_link_libraries(Game ${GLFW_LIBRARIES} ${OPENGL_LIBRARIES} ${GLEW_LIBRARIES} ${OPENGL_gl_LIBRARY} SOIL freetype)
+include_directories(${GLEW_INCLUDE_DIRS} ${OPENGL_INCLUDE_DIR} ${OPENGL_INCLUDE_DIRS} ${GLUT_INCLUDE_DIRS})
+target_link_libraries(Game ${GLFW_LIBRARIES} ${OPENGL_LIBRARIES} ${GLEW_LIBRARIES} ${OPENGL_gl_LIBRARY} SOIL
+        ${FREETYPE_LIBRARIES} ${GLUT_LIBRARY})

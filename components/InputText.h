@@ -9,7 +9,7 @@
 #include <GLFW/glfw3.h>
 #include <iostream>
 #include "../util/Shader.h"
-#include <GL/gl.h>
+//#include <GL/gl.h>
 #include <glm/ext.hpp>
 #include <list>
 #include "TextDraw.h"

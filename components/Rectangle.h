@@ -7,13 +7,13 @@
 
 
 #include <GL/glew.h>
-#include <GL/gl.h>
+//#include <GL/gl.h>
 #include "../util/Shader.h"
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <GLFW/glfw3.h>
-#include <SOIL/SOIL.h>
+#include <SOIL.h>
 
 class Rectangle {
     GLuint VBO, VAO, EBO;

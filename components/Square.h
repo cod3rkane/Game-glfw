@@ -9,7 +9,7 @@
 #include <glm/glm.hpp>
 #include <glm/ext.hpp>
 #include <GLFW/glfw3.h>
-#include <SOIL/SOIL.h>
+#include <SOIL.h>
 
 class Square {
     Shader* shaderPoint;
