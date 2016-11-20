@@ -190,8 +190,8 @@ int main(int argc, char** argv) {
     ObjLoader stallObj = ObjLoader();
     RawModel firstRawModel = stallObj.loadObj("assets/Models/stall.obj", loader);
     ObjModel stallModel(modelViewProjectionTextured, firstRawModel);
-    unsigned char *stallTexture = SOIL_load_image("assets/images/stallTexture.png", &imageW, &imageH, 0, SOIL_LOAD_RGBA);
-    stallModel.textureImage(stallTexture, imageW, imageH, SOIL_LOAD_RGB);
+    unsigned char *stallTexture = SOIL_load_image("assets/images/stallTexture.png", &imageW, &imageH, 0, SOIL_LOAD_RGB);
+    stallModel.textureImage(stallTexture, imageW, imageH, GL_RGB);
     Entity test(0, vec3(0, 0, 0), 0, 0, 0, 1);
     stallModel.setEntity(test);
 
