@@ -1,4 +1,9 @@
-# Game-glfw
-My C++ Game with OpenGL and GLFW
+# Game-glfw - Study Project
 
-This project is just for study and test C++ and OpenGL programs.
+First: This project just for self study GLFW, OpenGL and C/C++.
+Second: Compile the packages into 'includes/' dir.
+
+# Game-glfw - Projeto Estudo
+
+Primeiro: Este projeto é apenas para que eu possa estudar GLFW, OpenGL e C/C++.
+Segundo: Compile as dependecias da pasta 'includes/'.
