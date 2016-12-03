@@ -44,7 +44,9 @@ void ObjModel::render() {
     glUniformMatrix4fv(projectionMatrixLocation, 1, GL_FALSE, glm::value_ptr(projectionMatrix));
 
     glBindVertexArray(this->rawModel->getVaoID());
+    glEnable(GL_DEPTH_TEST); // Essa linha evita com que o elemento fique transparente.
     glDrawElements(GL_TRIANGLES, this->rawModel->getVertexCount() - 1, GL_UNSIGNED_INT, 0);
+    glDisable(GL_DEPTH_TEST);
     glBindVertexArray(0);
 }
 

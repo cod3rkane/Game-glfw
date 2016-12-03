@@ -1,5 +1,2 @@
-SEMPRE LEMBRAR DE COMPILAR OS PACKAGES DE TERCEIROS DENTRO DA PASTA INCLUDES DO PROJETO.
-
-@todo Create Image Class
-@todo create Component Cube Class, where is possible pass Texture
-@todo Create Player Class, and create first Player Character
+@todo Precisar corrigir o Bug dos models importados 3D.
+@todo Corrigir o Bug do movimento com que mesmo soltando o btn, continua em movimento. (Delay)
