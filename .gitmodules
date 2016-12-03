@@ -1,0 +1,3 @@
+[submodule "includes/Simple-OpenGL-Image-Library"]
+	path = includes/Simple-OpenGL-Image-Library
+	url = git@github.com:cod3rkane/Simple-OpenGL-Image-Library.git
