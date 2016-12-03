@@ -21,8 +21,8 @@ include_directories(${FREETYPE_INCLUDE_DIRS})
 pkg_search_module(GLEW REQUIRED glew)
 include_directories(${GLEW_INCLUDE_DIRS})
 
-include_directories(includes/include/SOIL)
-link_directories(includes/lib)
+include_directories(includes/compiled/include/SOIL)
+link_directories(includes/compiled/lib)
 
 set(SOURCE_FILES main.cpp components/Button.cpp components/Button.h util/Shader.cpp util/Shader.h
         components/Rectangle.cpp components/Rectangle.h util/FontConfigs.cpp util/FontConfigs.h util/Character.h
