@@ -7,8 +7,8 @@ find_package(PkgConfig REQUIRED)
 find_package(OpenGL REQUIRED)
 find_package(GLEW REQUIRED)
 find_package(GLUT REQUIRED)
-#find_package(glm REQUIRED)
-#find_package(freetype REQUIRED)
+find_package(glm REQUIRED)
+find_package(freetype REQUIRED)
 
 find_package(glfw3 3.2 REQUIRED)
 
@@ -20,9 +20,6 @@ include_directories(${FREETYPE_INCLUDE_DIRS})
 
 pkg_search_module(GLEW REQUIRED glew)
 include_directories(${GLEW_INCLUDE_DIRS})
-
-include_directories(includes/compiled/include/SOIL)
-link_directories(includes/compiled/lib)
 
 set(SOURCE_FILES main.cpp components/Button.cpp components/Button.h util/Shader.cpp util/Shader.h
         components/Rectangle.cpp components/Rectangle.h util/FontConfigs.cpp util/FontConfigs.h util/Character.h
@@ -36,5 +33,5 @@ set(SOURCE_FILES main.cpp components/Button.cpp components/Button.h util/Shader.
 add_executable(Game ${SOURCE_FILES})
 
 include_directories(${GLEW_INCLUDE_DIRS} ${OPENGL_INCLUDE_DIR} ${OPENGL_INCLUDE_DIRS} ${GLUT_INCLUDE_DIRS})
-target_link_libraries(Game ${GLFW_LIBRARIES} ${OPENGL_LIBRARIES} ${GLEW_LIBRARIES} ${OPENGL_gl_LIBRARY} SOIL
-        ${FREETYPE_LIBRARIES} ${GLUT_LIBRARY})
+target_link_libraries(Game ${GLFW_LIBRARIES} ${OPENGL_LIBRARIES} ${GLEW_LIBRARIES} ${OPENGL_gl_LIBRARY} SOIL freetype
+        ${FREETYPE_LIBRARIES} ${GLUT_LIBRARY} opengl32 gdi32)

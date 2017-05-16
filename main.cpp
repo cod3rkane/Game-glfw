@@ -95,7 +95,7 @@ int main(int argc, char** argv) {
 
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 5);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
     glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
@@ -136,13 +136,13 @@ int main(int argc, char** argv) {
     glMatrixMode(GL_MODELVIEW);
 
     Shader modelViewProjectionTextured(
-            "assets/Shaders/ModelViewProjectionTextured.vert",
-            "assets/Shaders/ModelViewProjectionTextured.frag"
+            "F:\\Game-glfw\\assets\\Shaders\\ModelViewProjectionTextured.vert",
+            "F:\\Game-glfw\\assets\\Shaders\\ModelViewProjectionTextured.frag"
     );
 
     Shader modelViewProjectionColor(
-            "assets/Shaders/ModelViewProjection.vert",
-            "assets/Shaders/ModelViewProjection.frag"
+            "F:\\Game-glfw\\assets\\Shaders\\ModelViewProjection.vert",
+            "F:\\Game-glfw\\assets\\Shaders\\ModelViewProjection.frag"
     );
 
     ProjectionMatrix projectionMatrix;
@@ -173,12 +173,12 @@ int main(int argc, char** argv) {
 
         cubes[i]->setEntity(*entity[i]);
         cubes[i]->shader(&modelViewProjectionTextured);
-        dirtTexture = SOIL_load_image((i >= 30 ? "assets/images/stone.jpg" : "assets/images/dirt.jpg"), &imageW, &imageH, 0, SOIL_LOAD_RGB);
+        dirtTexture = SOIL_load_image((i >= 30 ? "F:\\Game-glfw\\assets\\images\\stone.jpg" : "F:\\Game-glfw\\assets\\images\\dirt.jpg"), &imageW, &imageH, 0, SOIL_LOAD_RGB);
         cubes[i]->textureImage(dirtTexture, imageW, imageH, GL_RGB);
     }
 
     // ### Font Configs
-    Shader fontShader("assets/Shaders/FontVertexShader.glsl", "assets/Shaders/FontFragmentShader.glsl");
+    Shader fontShader("F:\\Game-glfw\\assets\\Shaders\\FontVertexShader.glsl", "F:\\Game-glfw\\assets\\Shaders\\FontFragmentShader.glsl");
     FontConfigs fontConfigs(18);
     // ### End Font Configs
 
@@ -188,9 +188,9 @@ int main(int argc, char** argv) {
 
     Loader loader;
     ObjLoader stallObj = ObjLoader();
-    RawModel firstRawModel = stallObj.loadObj("assets/Models/stall.obj", loader);
+    RawModel firstRawModel = stallObj.loadObj("F:\\Game-glfw\\assets\\Models\\stall.obj", loader);
     ObjModel stallModel(modelViewProjectionTextured, firstRawModel);
-    unsigned char *stallTexture = SOIL_load_image("assets/images/stallTexture.png", &imageW, &imageH, 0, SOIL_LOAD_RGB);
+    unsigned char *stallTexture = SOIL_load_image("F:\\Game-glfw\\assets\\images\\stallTexture.png", &imageW, &imageH, 0, SOIL_LOAD_RGB);
     stallModel.textureImage(stallTexture, imageW, imageH, GL_RGB);
     Entity test(0, vec3(0, 0, 0), 0, 0, 0, 1);
     stallModel.setEntity(test);

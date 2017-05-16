@@ -11,7 +11,7 @@ FontConfigs::FontConfigs(FT_UInt fontSize) {
     }
 
     // Load FontFace
-    if (FT_New_Face(this->ft, "assets/fonts/arial.ttf", 0, &this->face)) {
+    if (FT_New_Face(this->ft, "F:\\Game-glfw\\assets\\fonts\\arial.ttf", 0, &this->face)) {
         cout << "ERROR::FREETYPE: Failed to load font" << endl;
     }
 
