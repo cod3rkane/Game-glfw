@@ -6,7 +6,7 @@
 #define GAME_MENU_H
 
 #include "../Square.h"
-#include <SOIL/SOIL.h>
+#include <SOIL.h>
 
 class Menu {
     Shader shader;

@@ -13,7 +13,7 @@
 #include <GL/glew.h>
 #include <glm/glm.hpp>
 #include <glm/ext.hpp>
-#include <SOIL/SOIL.h>
+#include <SOIL.h>
 
 using namespace glm;
 using namespace std;
